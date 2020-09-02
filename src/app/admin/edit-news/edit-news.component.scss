@@ -1,0 +1,8 @@
+@import './src/app/admin/shared/styles/_mixins';
+
+#edit-news__wrapper {
+
+  & .edit-news__form {
+    @include edit;
+  }
+}

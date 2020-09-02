@@ -1,0 +1,92 @@
+<div id="edit-layout">
+  <div class="edit-layout__item" *ngIf="postsNews.length; else loadingN">
+    <div class="edit-layout__search">
+      <input class="edit-layout__input" type="text" placeholder="Поиск" [(ngModel)]="searchStr">
+    </div>
+    <h2>Список новостей</h2>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Название</th>
+          <th>Дата</th>
+          <th>Действие</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let postN of postsNews | searchInfo: searchStr let idxN = index">
+          <td>{{ idxN + 1 }}</td>
+          <td class="edit-layout__title">{{ postN.title }}</td>
+          <td class="edit-layout__date">{{ postN.date | date: 'medium': null: 'ru' }}</td>
+          <td class="edit-layout__button">
+            <button
+             class="btn"
+             [routerLink]="['/admin', 'edit', 'news', postN.id]"
+            >
+             Открыть
+            </button>
+            <button
+              class="btn-remove"
+              (click)="removeN(postN.id)"
+            >
+             Удалить
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+
+  <div class="edit-layout__item"
+  *ngIf="postsModels.length; else loadingM"
+  >
+    <br>
+    <h2>Список моделей</h2>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Название</th>
+          <th>Дата</th>
+          <th>Действие</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let postM of postsModels | searchInfo: searchStr let idxM = index">
+          <td>{{ idxM + 1 }}</td>
+          <td class="edit-layout__title">{{ postM.title }}</td>
+          <td class="edit-layout__date">{{ postM.date | date: 'medium': null: 'ru' }}</td>
+          <td class="edit-layout__button">
+            <button
+              class="btn"
+              [routerLink]="['/admin', 'edit', 'models', postM.id]"
+            >
+              Открыть
+            </button>
+            <button
+              class="btn-remove"
+              (click)="removeM(postM.id)"
+            >
+              Удалить
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #loadingN>
+  <svg class="spinner-news" viewBox="0 0 50 50">
+    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+  </svg>
+</ng-template>
+
+<ng-template #loadingM>
+  <svg class="spinner-models" viewBox="0 0 50 50">
+    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+  </svg>
+</ng-template>

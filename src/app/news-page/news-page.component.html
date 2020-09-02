@@ -1,0 +1,57 @@
+<div id="news-wrapper">
+  <div
+    *ngIf="postsN$ | async as posts; else loading"
+    class="news-content"
+  >
+    <div *ngFor="let postN of posts">
+     <br>
+     <div>
+      <h2>{{ postN.title }}</h2>
+      <div>
+        <small>Дата новости: {{ postN.date | date:'dd.MM.yyyy' }}</small>
+        <div>
+          <quill-view-html [content]="postN.text"></quill-view-html>
+        </div>
+      </div>
+     </div>
+      <hr>
+    </div>
+  </div>
+
+  <div *ngIf="postsN$ | async; else loading">
+    <div class="comments-content">
+      <h2>Комментарии</h2>
+      <form [formGroup]="formCom" (ngSubmit)="submitCom()">
+        <textarea cols="30" rows="5" formControlName="text" placeholder="Введите комментарий..."></textarea>
+        <div>
+          <button
+            class="btn-login"
+            type="submit"
+            [disabled]="formCom.invalid"
+          >
+            Добавить комментарий
+          </button>
+        </div>
+      </form>
+      <br>
+      <hr>
+    </div>
+
+    <div class="comments-list">
+      <div *ngFor="let comment of commentsList">
+        <br>
+        <div class="comments-list__item">
+          <p>{{ comment.text }}</p>
+          <span>{{ comment.date | date: 'dd.MM.yyyy' }} <i *ngIf="authService.isAuthenticated()" (click)="deleteComment(comment.id)" class="fa fa-trash" aria-hidden="true"></i></span>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </div>
+</div>
+
+<ng-template #loading>
+  <svg class="spinner" viewBox="0 0 50 50">
+    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+  </svg>
+</ng-template>

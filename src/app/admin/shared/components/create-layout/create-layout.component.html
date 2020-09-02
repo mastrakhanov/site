@@ -1,0 +1,14 @@
+<div id="create-layout__wrapper">
+  <nav class="create-layout__nav">
+    <ul class="create-layout__ul">
+      <li class="create-layout__li" routerLinkActive="active">
+        <a class="create-layout__a" [routerLink]="['/admin', 'create', 'news']">Создать новость</a>
+      </li>
+      <li class="create-layout__li" routerLinkActive="active">
+        <a class="create-layout__a" [routerLink]="['/admin', 'create', 'models']">Создать модель</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>

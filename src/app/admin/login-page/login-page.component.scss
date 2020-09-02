@@ -1,0 +1,55 @@
+#login-main__wrapper {
+
+  & .login-main__form {
+    max-width: 600px;
+    padding: 1rem;
+    border: #ccc 1px dotted;
+    margin: 0.7rem auto;
+
+    & .login-main__header {
+      max-width: 285px;
+    }
+
+    & .alert {
+      color: white;
+      background-color: red;
+      font-size: 15px;
+    }
+
+    & .login-main__control {
+      margin: 0.7rem auto;
+      &.invalid {
+        input {
+          border-color: red;
+        }
+      }
+    }
+
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    input[type='date'],
+    select,
+    textarea {
+      display: block;
+      width: 100%;
+      padding: 0.4rem 0 0.4rem 0;
+      font-size: 1.2rem;
+      border: 1px solid #ccc;
+    }
+
+    & .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    & .registration {
+      margin-right: -9px;
+
+      & a {
+        text-decoration: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,165 @@
+@import "src/app/shared/styles/_params";
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+
+  & .main-content__slider {
+    display: block;
+    width: $width__wrapper;
+    margin: 0 auto;
+
+
+    & .image__slider {
+      max-width: $width__wrapper;
+    }
+  }
+
+  & .main-content__info {
+    display: flex;
+    justify-content: center;
+    padding: 0 10px 0 10px;
+
+    & .main-content__about {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      margin-top: 20px;
+      max-width: 900px;
+      background-color: white;
+      font-size: 14px;
+
+
+      & .main-content__infoLeft {
+        flex: 0 0 47%;
+        -ms-flex: 0 0 47%;
+        text-align: justify;
+
+        & .info__header {
+          font-size: 18px;
+        }
+      }
+
+      & .main-content__infoRight {
+        flex: 0 0 47%;
+        -ms-flex: 0 0 47%;
+        text-align: justify;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 910px) {
+  #wrapper {
+
+    & .main-content__slider {
+      width: 800px;
+
+      & .image__slider {
+        max-width: 800px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 810px) {
+  #wrapper {
+
+    & .main-content__slider {
+      width: 700px;
+
+      & .image__slider {
+        max-width: 700px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 710px) {
+  #wrapper {
+
+    & .main-content__slider {
+      width: 600px;
+
+      & .image__slider {
+        max-width: 600px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 610px) {
+  #wrapper {
+
+    & .main-content__slider {
+      width: 500px;
+
+      & .image__slider {
+        max-width: 500px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 510px) {
+  #wrapper {
+
+    & .main-content__slider {
+      width: 400px;
+
+      & .image__slider {
+        max-width: 400px;
+      }
+    }
+
+    & .main-content__info {
+      display: block;
+
+
+      & .main-content__about {
+        display: block;
+        margin-top: 20px;
+        max-width: 900px;
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: justify;
+        text-indent: 10px;
+        padding: 0 5px 0 5px;
+
+        & .main-content__infoLeft {
+
+          & .info__header {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 410px) {
+  #wrapper {
+
+    & .main-content__slider {
+      width: 350px;
+
+      & .image__slider {
+        max-width: 350px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 355px) {
+  #wrapper {
+
+    & .main-content__slider {
+      width: 300px;
+
+      & .image__slider {
+        max-width: 300px;
+      }
+    }
+  }
+}
+

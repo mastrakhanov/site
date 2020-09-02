@@ -1,0 +1,19 @@
+<div id="wrapper__header">
+  <div class="header__img">
+    <a href="/"><img src="../../assets/logo-bugatti.webp" alt="" class = "logo"></a>
+  </div>
+  <div class="header__nav">
+      <nav>
+        <ul class="header-nav__ul">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/']">Главная</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['/', 'history']">История</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['/', 'constructors']">Конструкторы</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['/', 'models']">Модельный ряд</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['/', 'news']">Новости</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['/', 'contacts']" class="header-last__link">Контакты</a></li>
+        </ul>
+      </nav>
+  </div>
+</div>
+<br>
+<router-outlet></router-outlet>

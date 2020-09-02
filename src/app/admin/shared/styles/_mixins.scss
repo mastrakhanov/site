@@ -1,0 +1,75 @@
+$width: 700px;
+
+@mixin edit {
+  max-width: $width;
+  margin: 0 auto;
+  background-color: white;
+  padding-top: 30px;
+  padding-bottom: 10px;
+
+  & h2 {
+    margin-left: 5px;
+  }
+
+  & .edit-form__main {
+    margin: 0.7rem auto;
+    padding: 0 5px 0 5px;
+
+    & .edit-form__label {
+      margin-right: 10px;
+    }
+
+    & .edit-form__input {
+      width: 100%;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+    &.invalid {
+      input {
+        border-color: red;
+      }
+    }
+  }
+
+  & .btn-login {
+    margin-left: 5px;
+  }
+}
+
+@mixin create {
+  max-width: $width;
+  margin: 0 auto;
+  background-color: white;
+  padding-top: 30px;
+  padding-bottom: 10px;
+
+  & h2 {
+    margin-left: 5px;
+  }
+
+  & .create-form__main {
+    margin: 0.7rem auto;
+    padding: 0 5px 0 5px;
+
+    & .create-form__label {
+      margin-right: 10px;
+    }
+
+    & .create-form__input {
+      width: 100%;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+    &.invalid {
+      input {
+        border-color: red;
+      }
+    }
+  }
+
+  & .btn-login {
+    margin-left: 5px;
+  }
+}

@@ -1,0 +1,43 @@
+<div id="edit-models__wrapper" *ngIf="form; else loading">
+  <form class="edit-models__form" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Редактирование модели автомобиля</h2>
+    <div
+      class="edit-form__main"
+      [ngClass]="{invalid: form.get('title').touched && form.get('title').invalid}"
+    >
+      <label class="edit-form__label" for="title">Название модели:</label>
+      <input class="edit-form__input" id="title" type="text" formControlName="title">
+      <div
+        *ngIf="form.get('title').touched && form.get('title').invalid"
+        class="validation"
+      >
+        <small *ngIf="form.get('title').errors.required">
+          Введите название модели
+        </small>
+      </div>
+    </div>
+    <div class="edit-form__main">
+      <label>Контент модели автомобиля:</label>
+      <quill-editor formControlName="text"></quill-editor>
+    </div>
+    <div
+      *ngIf="form.get('text').touched && form.get('text').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('text').errors.required">
+        Введите описание модели автомобиля
+      </small>
+    </div>
+    <button
+      type="submit"
+      class="btn-login"
+      [disabled]="form.invalid || submitted"
+    >Обновить</button>
+  </form>
+</div>
+
+<ng-template #loading>
+  <svg class="spinner" viewBox="0 0 50 50">
+    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+  </svg>
+</ng-template>

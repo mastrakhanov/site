@@ -1,0 +1,25 @@
+<div *ngIf="postsM$ | async as posts; else loading"
+     id="models__wrapper"
+  >
+  <div *ngFor="let postM of posts"
+       class="models"
+  >
+    <br>
+    <div>
+      <h2>{{ postM.title }}</h2>
+      <div>
+        <div>
+          <quill-view-html [content]="postM.text"></quill-view-html>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <app-footer></app-footer>
+</div>
+
+<ng-template #loading>
+  <svg class="spinner" viewBox="0 0 50 50">
+    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+  </svg>
+</ng-template>

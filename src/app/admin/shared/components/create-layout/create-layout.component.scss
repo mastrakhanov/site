@@ -1,0 +1,39 @@
+@import 'src/app/admin/shared/styles/_paramsAdmin';
+
+#create-layout__wrapper {
+  max-width: $width__admin;
+  margin: 0 auto;
+
+  & .create-layout__nav {
+    padding: 15px 0 0 0;
+    max-width: 420px;
+    margin: 0 auto;
+
+    & .create-layout__ul {
+      display: flex;
+      justify-content: space-around;
+      list-style: none;
+      overflow: hidden;
+      padding: 0 5px 0 5px;
+
+      & .create-layout__li {
+        margin-left: 2%;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        & .create-layout__a {
+          color: #484d78;
+          font-size: 14px;
+          font-weight: bold;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

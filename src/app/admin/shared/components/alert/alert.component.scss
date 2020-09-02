@@ -1,0 +1,15 @@
+#alert__wrapper {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 700px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 5px 0 5px;
+
+  & .alert-main {
+    max-width: 250px;
+    font-size: 16px;
+    text-align: center;
+    padding: 5px;
+  }
+}

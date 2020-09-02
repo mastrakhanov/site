@@ -1,0 +1,45 @@
+@import "src/app/shared/styles/_params";
+
+#contacts__wrapper {
+
+  & .contacts-info__main {
+    max-width: $width__wrapper;
+    margin: 0 auto;
+
+
+    & .contacts-info {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      font-size: 14px;
+
+      & .contacts-info__contacts {
+        font-weight: bold;
+      }
+
+      & .contacts-info__mobile {
+
+      }
+
+      & .contacts-info__mail {
+        margin-bottom: 20px;
+      }
+    }
+
+    & .contacts-info__buy {
+      position: relative;
+      padding-bottom: 75%;
+      height: 100%;
+      overflow: hidden;
+      margin-bottom: -55px;
+
+      & .contacts-info__map {
+        position: absolute;
+        top: 0;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+      }
+    }
+  }
+}

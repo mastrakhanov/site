@@ -1,0 +1,118 @@
+@import 'src/app/admin/shared/styles/_paramsAdmin';
+
+#edit-layout {
+
+  & .edit-layout__item {
+    max-width: $width__admin;
+    margin: 0 auto;
+    overflow: hidden;
+
+    & .edit-layout__search {
+      display: block;
+      color: #888;
+      margin: 0.7rem auto;
+
+      & .edit-layout__input {
+        height: 25px;
+        width: 200px;
+      }
+    }
+
+    & table {
+      margin: 0 auto;
+    }
+
+    & td {
+      padding: 0 20px 0 20px;
+    }
+
+    & tr {
+      font-size: 14px;
+    }
+
+    & .edit-layout__title {
+      width: 150px;
+    }
+
+    & .edit-layout__date {
+
+    }
+  }
+}
+
+@media screen and (max-width: 722px) {
+  #edit-layout {
+
+    & .edit-layout__item {
+
+      & .edit-layout__search {
+
+        & .edit-layout__input {
+          margin-left: 10px;
+        }
+      }
+
+      & h2 {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 678px) and (max-width: 683px) {
+  #edit-layout {
+
+    & .edit-layout__item {
+
+      & table {
+
+        & .edit-layout__button {
+          text-align: center;
+
+          & .btn {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 678px) {
+  #edit-layout {
+
+    & .edit-layout__item {
+
+      & table {
+
+        & .edit-layout__button {
+          text-align: center;
+
+          & .btn {
+            margin: 0;
+          }
+
+          & .btn-remove {
+            padding: 0.4rem 1.35rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 426px) {
+ #edit-layout {
+
+   & .edit-layout__item {
+
+     & td {
+       padding: 0 5px 0 5px;
+     }
+
+     & .edit-layout__title {
+       width: 100px;
+     }
+   }
+ }
+}

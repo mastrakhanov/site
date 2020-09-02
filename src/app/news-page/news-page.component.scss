@@ -1,0 +1,59 @@
+@import "src/app/shared/styles/_params";
+
+#news-wrapper {
+
+  & .news-content {
+    padding: 0 5px 0 5px;
+    max-width: $width__wrapper;
+    margin: 0 auto;
+  }
+
+  & .comments-content {
+    max-width: $width__wrapper;
+    margin: 20px auto 20px auto;
+    padding: 0 5px 0 5px;
+
+    & form {
+
+
+      & textarea {
+        margin-bottom: 20px;
+        margin-top: 20px;
+        width: 100%;
+        resize: none;
+      }
+
+      & button {
+        margin-left: 0;
+      }
+    }
+  }
+
+  & .comments-list {
+    margin: 0 auto;
+    max-width: $width__wrapper;
+    padding: 0 5px 0 5px;
+
+
+    & .comments-list__item {
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border-bottom: 1px solid #000;
+
+      & p {
+        max-width: 780px;
+        overflow: auto;
+        word-wrap: break-word;
+      }
+
+      & i {
+        font-size: 14px;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+    }
+  }
+}

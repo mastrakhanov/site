@@ -1,0 +1,137 @@
+@mixin option {
+  & input {
+    padding: 3px;
+    width: 100%;
+  }
+}
+
+@mixin basic {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+#registration__wrapper {
+  border: 1px solid #000000;
+  max-width: 500px;
+  background-color: white;
+  margin: 30px auto 30px auto;
+  box-sizing: border-box;
+  padding: 20px;
+
+  span {
+    color: red;
+  }
+
+    & .registration-info__header {
+      text-align: center;
+    }
+
+    & .registration-info__main {
+
+        & .registration-info__subheader {
+          text-align: center;
+        }
+
+        & .registration-info__control {
+          margin: 0.7rem auto;
+          flex-wrap: wrap;
+
+          & input {
+            width: 100%;
+          }
+
+          &.invalid {
+            input {
+              border-color: red;
+              border-width: 1px;
+            }
+          }
+        }
+
+        & .surname {
+          margin-top: 20px;
+          @include basic;
+          @include option;
+        }
+
+        & .name {
+          @include basic;
+          @include option;
+        }
+
+        & .email {
+          @include basic;
+          @include option;
+        }
+
+        & .password {
+          @include basic;
+          @include option;
+        }
+
+        & .password_again {
+          @include basic;
+          @include option;
+        }
+
+        & .country {
+          @include basic;
+
+              & .country__label {
+                margin: 3px 10px 0 0;
+              }
+
+              & .country__select {
+                padding: 3px;
+              }
+        }
+
+        & .city {
+          @include basic;
+          @include option;
+        }
+
+        & .dop-info {
+          @include basic;
+
+              & i {
+                margin: 0 10px 0 0;
+                color: #484d78;
+                font-size: 14px;
+                cursor: pointer;
+              }
+        }
+
+        & .info-input {
+
+            & .info-input__label {
+              margin-bottom: 10px;
+            }
+
+            & .info-input__textarea {
+              margin-bottom: 10px;
+              resize: none;
+              width: 100%;
+              box-sizing: border-box;
+            }
+        }
+
+        & .personal {
+          @include basic;
+
+            & .personal__label {
+              margin-left: 10px;
+            }
+
+            &.invalid {
+              & .personal__input {
+                outline: 1px solid red;
+              }
+            }
+        }
+
+        & .btn-login {
+          text-align: left;
+        }
+    }
+}

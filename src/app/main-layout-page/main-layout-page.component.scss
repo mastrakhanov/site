@@ -1,0 +1,54 @@
+@import "src/app/shared/styles/_params";
+
+#wrapper__header {
+  max-width: $width__wrapper;
+  margin: 0 auto;
+
+  & .header__img {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  & .header__nav {
+    margin-top: 20px;
+    border-top: 1px solid brown;
+    border-bottom: 1px solid brown;
+    padding: 10px 0 10px 0;
+
+    & .header-nav__ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      list-style: none;
+
+      & .active a {
+        color: brown;
+      }
+
+      & li {
+
+        & a {
+          text-decoration: none;
+          color: #000;
+          font-size: 14px;
+          font-weight: bold;
+          margin-left: 10px !important;
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        & .header-last__link {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@import "src/app/shared/styles/_params";
+
+@mixin info-basic() {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: justify;
+
+  & h2 {
+    padding-left: 10px;
+  }
+
+  & p {
+    line-height: 1.5;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  & .history-info__ul1 {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: space-around;
+
+    & li {
+      margin-left: 1%;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+
+    & .ul1-img__text {
+      text-align: center;
+      max-width: 180px;
+      font-size: 13px;
+    }
+  }
+}
+
+#history__wrapper {
+  max-width: $width__wrapper;
+  margin: 0 auto;
+
+  & .history-info__one {
+    @include info-basic;
+  }
+
+  & .history-info__two {
+    @include info-basic;
+  }
+
+  & .history-info__three {
+    @include info-basic;
+  }
+}

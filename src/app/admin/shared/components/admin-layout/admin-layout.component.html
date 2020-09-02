@@ -1,0 +1,23 @@
+<div id="layout__wrapper">
+  <div class="layout-header">
+    <nav class="layout-header__nav">
+      <ul class="layout-header__ul" *ngIf="auth.isAuthenticated()">
+        <li class="layout-header__li">
+          <a class="layout-header__a" [routerLink]="['/']">На главную страницу</a>
+        </li>
+        <li class="layout-header__li" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a class="layout-header__a" [routerLink]="['/admin', 'create']">Создать</a>
+        </li>
+        <li class="layout-header__li" routerLinkActive="active">
+          <a class="layout-header__a" [routerLink]="['/admin', 'edit']">Редактировать</a>
+        </li>
+        <li class="layout-header__li" routerLinkActive="active">
+          <a class="layout-header__a" href="#" (click)="logout($event)">Выйти</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<app-alert></app-alert>
+
+<router-outlet></router-outlet>
