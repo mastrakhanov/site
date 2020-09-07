@@ -1,0 +1,17 @@
+{
+  "name": "site",
+  "short_name": "site",
+  "theme_color": "#1976d2",
+  "background_color": "#fafafa",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "assets/bugatti.jpg",
+      "sizes": "500x500",
+      "type": "image/jpeg",
+      "purpose": "maskable any"
+    }
+  ]
+}
