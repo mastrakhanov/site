@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
@@ -10,7 +10,8 @@ import { AlertService } from '../../services/alert.service';
 @Component({
   selector: 'app-edit-layout',
   templateUrl: './edit-layout.component.html',
-  styleUrls: ['./edit-layout.component.scss']
+  styleUrls: ['./edit-layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class EditLayoutComponent implements OnInit {

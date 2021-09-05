@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
@@ -12,7 +12,8 @@ import { AuthService } from '../admin/shared/services/auth.service';
 @Component({
   selector: 'app-news-page',
   templateUrl: './news-page.component.html',
-  styleUrls: ['./news-page.component.scss']
+  styleUrls: ['./news-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class NewsPageComponent implements OnInit {

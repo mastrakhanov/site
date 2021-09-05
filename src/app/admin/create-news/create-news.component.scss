@@ -5,4 +5,8 @@
   & .create-news__form {
     @include create;
   }
+
+  & .quill-validation {
+    margin-left: 5px;
+  }
 }

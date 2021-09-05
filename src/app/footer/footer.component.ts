@@ -1,11 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import {LOCAL_STORAGE, WINDOW} from '@ng-web-apis/common';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { WINDOW } from '@ng-web-apis/common';
 
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent implements OnInit {
 

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { IPost } from '../../shared/interface';
 import { PostsService } from '../../shared/posts.service';
@@ -10,7 +11,8 @@ import { AlertService } from '../shared/services/alert.service';
 @Component({
   selector: 'app-create-models',
   templateUrl: './create-models.component.html',
-  styleUrls: ['./create-models.component.scss']
+  styleUrls: ['./create-models.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateModelsComponent {
 
@@ -18,6 +20,8 @@ export class CreateModelsComponent {
     title: new FormControl(null, Validators.required),
     text: new FormControl(null, Validators.required)
   });
+
+  disabled$: Observable<boolean> = this.form.statusChanges.pipe(map(x => x === 'INVALID'));
 
   constructor(
     private readonly postsService: PostsService,

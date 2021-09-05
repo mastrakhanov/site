@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { switchMap, take } from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { PostsService } from '../../shared/posts.service';
 import { IPost } from '../../shared/interface';
@@ -11,7 +12,8 @@ import { AlertService } from '../shared/services/alert.service';
 @Component({
   selector: 'app-edit-news',
   templateUrl: './edit-news.component.html',
-  styleUrls: ['./edit-news.component.scss']
+  styleUrls: ['./edit-news.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditNewsComponent implements OnInit {
 
@@ -20,10 +22,13 @@ export class EditNewsComponent implements OnInit {
   post: IPost;
   submitted = false;
 
+  disabled$: Observable<boolean> = EMPTY;
+
   constructor(
     private readonly postsService: PostsService,
     private readonly route: ActivatedRoute,
-    private readonly alertService: AlertService
+    private readonly alertService: AlertService,
+    private readonly changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -32,10 +37,14 @@ export class EditNewsComponent implements OnInit {
     )
     .subscribe((post: IPost) => {
       this.post = post;
+
       this.form = new FormGroup({
         title: new FormControl(post.title, Validators.required),
         text: new FormControl(post.text, Validators.required)
       });
+
+      this.disabled$ = this.form.statusChanges.pipe(map(x => x === 'INVALID'));
+      this.changeDetectorRef.markForCheck();
     });
   }
 
@@ -54,6 +63,7 @@ export class EditNewsComponent implements OnInit {
       .subscribe(() => {
         this.submitted = false;
         this.alertService.success('Новость успешно изменена');
+        this.changeDetectorRef.markForCheck();
       });
   }
 

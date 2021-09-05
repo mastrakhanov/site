@@ -5,4 +5,8 @@
   & .create-model__form {
     @include create;
   }
+
+  & .quill-validation {
+    margin-left: 5px;
+  }
 }

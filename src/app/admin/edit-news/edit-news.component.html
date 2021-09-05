@@ -24,14 +24,14 @@
       *ngIf="form.get('text').touched && form.get('text').invalid"
       class="validation"
     >
-      <small *ngIf="form.get('text').errors.required">
+      <small class="quill-validation" *ngIf="form.get('text').errors.required">
         Введите текст новости
       </small>
     </div>
     <button
       type="submit"
       class="btn-login"
-      [disabled]="form.invalid || submitted"
+      [disabled]="(disabled$ | async) || submitted"
     >Обновить</button>
   </form>
 </div>
