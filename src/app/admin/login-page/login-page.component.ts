@@ -14,7 +14,10 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
 
-  form: FormGroup;
+  form: FormGroup = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
 
   submitted = false;
   message: string;
@@ -34,11 +37,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       } else if (params ['authFailed']) {
         this.message = 'Сессия истекла. Введите данные заново.';
       }
-    });
-
-    this.form = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
 
     if (this.auth.isAuthenticated()) {

@@ -10,7 +10,10 @@ import { catchError } from 'rxjs/operators';
 
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(
+    private readonly auth: AuthService,
+    private readonly router: Router
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.auth.isAuthenticated()) {

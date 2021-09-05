@@ -17,7 +17,9 @@ import { AuthService } from '../admin/shared/services/auth.service';
 
 export class NewsPageComponent implements OnInit {
 
-  formComment: FormGroup;
+  formComment: FormGroup = new FormGroup({
+    text: new FormControl(null, Validators.required)
+  });
 
   commentsList$: Observable<IComment[]> = EMPTY;
   postsN$: Observable<IPost[]> = EMPTY;
@@ -31,10 +33,6 @@ export class NewsPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formComment = new FormGroup({
-      text: new FormControl(null, Validators.required)
-    });
-
     this.postsN$ = this.postsService.getAllNews();
     this.commentsList$ = this.check$
       .pipe(switchMap(() => this.commentsService.getAllComments()));

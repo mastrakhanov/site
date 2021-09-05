@@ -14,7 +14,10 @@ export class AuthService {
 
   public error$: Subject<string> = new Subject<string>();
 
-  constructor(private readonly http: HttpClient, @Inject(LOCAL_STORAGE) private readonly localStorage: Storage) { }
+  constructor(
+    private readonly http: HttpClient,
+    @Inject(LOCAL_STORAGE) private readonly localStorage: Storage
+  ) { }
 
   get token(): string {
     const expiresDate = new Date(this.localStorage.getItem('fb-token-exp'));
