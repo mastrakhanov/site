@@ -177,6 +177,14 @@
           }
         }
       }
-    }},
-  "defaultProject": "site"
+    }
+  },
+  "defaultProject": "site",
+  "schematics": {
+    "@schematics/angular": {
+      "component": {
+        "changeDetection": "OnPush"
+      }
+    }
+  }
 }

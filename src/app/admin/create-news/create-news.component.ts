@@ -1,49 +1,46 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Post} from '../../shared/interface';
-import {PostsService} from '../../shared/posts.service';
-import {AlertService} from '../shared/services/alert.service';
-import {Subscription} from 'rxjs';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { take } from 'rxjs/operators';
+
+import { IPost } from '../../shared/interface';
+import { PostsService } from '../../shared/posts.service';
+import { AlertService } from '../shared/services/alert.service';
+
 
 @Component({
   selector: 'app-create-news',
   templateUrl: './create-news.component.html',
   styleUrls: ['./create-news.component.scss']
 })
-export class CreateNewsComponent implements OnInit, OnDestroy {
+export class CreateNewsComponent {
 
-  constructor(private postsService: PostsService,
-              private alertService: AlertService) {}
-
-  form: FormGroup;
-  cSub: Subscription;
-
-  ngOnInit() {
-  this.form = new FormGroup({
+  form: FormGroup = new FormGroup({
     title: new FormControl(null, Validators.required),
     text: new FormControl(null, Validators.required)
   });
-}
 
-  submit() {
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly alertService: AlertService
+  ) { }
+
+  submit(): void {
     if (this.form.invalid) {
       return;
     }
-    const post: Post = {
+
+    const post: IPost = {
       title: this.form.value.title,
       text: this.form.value.text,
       date: new Date()
     };
 
-    this.cSub = this.postsService.createNews(post).subscribe(() => {
-      this.form.reset();
-      this.alertService.success('Новость успешно создана');
-    });
+    this.postsService.createNews(post)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.form.reset();
+        this.alertService.success('Новость успешно создана');
+      });
   }
 
-  ngOnDestroy() {
-    if (this.cSub) {
-      this.cSub.unsubscribe();
-    }
-  }
 }

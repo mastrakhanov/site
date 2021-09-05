@@ -1,16 +1,16 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {Post} from '../../shared/interface';
+import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'searchInfo'
-})
+import { IPost } from '../../shared/interface';
+
+
+@Pipe({ name: 'searchInfo' })
 export class SearchPipe implements PipeTransform {
-  transform(posts: Post[], search = ''): Post[] {
+
+  transform(posts: IPost[], search = ''): IPost[] {
     if (!search.trim()) {
       return posts;
     }
-    return posts.filter((post) => {
-      return post.title.toLowerCase().includes(search.toLowerCase());
-    });
+    return posts.filter((post) => post.title.toLowerCase().includes(search.toLowerCase()));
   }
+
 }

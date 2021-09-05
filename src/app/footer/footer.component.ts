@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import {LOCAL_STORAGE, WINDOW} from '@ng-web-apis/common';
+
 
 @Component({
   selector: 'app-footer',
@@ -6,19 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
+
   year: number;
 
-  ngOnInit() {
+  constructor(@Inject(WINDOW) private readonly window: Window) { }
+
+  ngOnInit(): void {
     this.year = new Date().getFullYear();
   }
 
-  onTop() {
-    const scrollToTop = window.setInterval(() => {
-      const pos = window.pageYOffset;
+  public onTop(): void {
+    const scrollToTop = this.window.setInterval(() => {
+      const pos = this.window.pageYOffset;
       if (pos > 0) {
-        window.scrollTo(0, pos - 30);
+        this.window.scrollTo(0, pos - 30);
       } else {
-        window.clearInterval(scrollToTop);
+        this.window.clearInterval(scrollToTop);
       }
     }, 5);
   }

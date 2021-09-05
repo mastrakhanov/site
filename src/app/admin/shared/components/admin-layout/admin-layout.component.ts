@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-adminlayout',
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.scss']
 })
-export class AdminLayoutComponent implements OnInit {
+export class AdminLayoutComponent {
 
   constructor(
-    public auth: AuthService,
-    private router: Router
+    public readonly auth: AuthService,
+    private readonly router: Router
   ) { }
 
-  ngOnInit() {
-  }
-
-  logout(event: Event) {
+  logout(event: Event): void {
     event.preventDefault();
     this.auth.logout();
     this.router.navigate(['/admin', 'login']);
   }
+
 }

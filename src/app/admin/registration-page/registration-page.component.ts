@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../shared/services/auth.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-registration-page',
@@ -12,9 +12,7 @@ export class RegistrationPageComponent implements OnInit {
   form: FormGroup;
   isVisible = false;
 
-  constructor(public auth: AuthService) {}
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern('^[a-z, A-Z, а-я, А-Я]*$')]),
       surname: new FormControl('', [Validators.required, Validators.pattern('^[a-z, A-Z, а-я, А-Я]*$')]),
@@ -28,20 +26,17 @@ export class RegistrationPageComponent implements OnInit {
     }, this.pwdMatchValidator);
   }
 
-  pwdMatchValidator(form: FormGroup) {
-    return form.get('pass').value === form.get('conf_pass').value
-      ? null : {'mismatch': true};
-  }
+  pwdMatchValidator = (form: FormGroup): { mismatch: true } | null =>
+    form.get('pass').value === form.get('conf_pass').value
+      ? null
+      : { mismatch: true };
 
-  submit() {
+  submit(): FormGroup | void {
     console.log('FORM', this.form);
 
     if (this.form.invalid) {
       return this.form;
     }
-
-    // setTimeout(() => {
-    //   this.form.reset();
-    // }, 5000);
   }
+
 }

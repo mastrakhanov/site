@@ -1,26 +1,26 @@
-export interface User {
+export interface IUser {
   email: string;
   password: string;
   returnSecureToken?: boolean;
 }
 
-export interface FbAuthResponse {
+export interface IFbAuthResponse {
   idToken: string;
   expiresIn: string;
 }
 
-export interface Post {
+export interface IPost {
   id?: string;
   title: string;
   text: string;
   date: Date;
 }
 
-export interface FbCreateResponse {
+export interface IFbCreateResponse {
   name: string;
 }
 
-export interface Comment {
+export interface IComment {
   id?: string;
   text: string;
   date: Date;

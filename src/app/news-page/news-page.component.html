@@ -21,13 +21,13 @@
   <div *ngIf="postsN$ | async; else loading">
     <div class="comments-content">
       <h2>Комментарии</h2>
-      <form [formGroup]="formCom" (ngSubmit)="submitCom()">
+      <form [formGroup]="formComment" (ngSubmit)="submitComment()">
         <textarea cols="30" rows="5" formControlName="text" placeholder="Введите комментарий..."></textarea>
         <div>
           <button
             class="btn-login"
             type="submit"
-            [disabled]="formCom.invalid"
+            [disabled]="formComment.invalid"
           >
             Добавить комментарий
           </button>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="comments-list">
-      <div *ngFor="let comment of commentsList">
+      <div *ngFor="let comment of commentsList$ | async">
         <br>
         <div class="comments-list__item">
           <p>{{ comment.text }}</p>

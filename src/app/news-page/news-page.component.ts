@@ -1,11 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Comment, Post} from '../shared/interface';
-import {Observable, Subscription} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 
-import {PostsService} from '../shared/posts.service';
-import {CommentsService} from '../shared/comments.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../admin/shared/services/auth.service';
+import { IComment, IPost } from '../shared/interface';
+import { PostsService } from '../shared/posts.service';
+import { CommentsService } from '../shared/comments.service';
+import { AuthService } from '../admin/shared/services/auth.service';
 
 
 @Component({
@@ -14,78 +15,54 @@ import {AuthService} from '../admin/shared/services/auth.service';
   styleUrls: ['./news-page.component.scss']
 })
 
-export class NewsPageComponent implements OnInit, OnDestroy {
+export class NewsPageComponent implements OnInit {
 
-  commentsList: Comment[] = [];
-  formCom: FormGroup;
-  postsN$: Observable<Post[]>;
-  ngcSub: Subscription;
-  cSub: Subscription;
-  gcSub: Subscription;
-  dSub: Subscription;
+  formComment: FormGroup;
+
+  commentsList$: Observable<IComment[]> = EMPTY;
+  postsN$: Observable<IPost[]> = EMPTY;
+
+  check$ = new BehaviorSubject<boolean>(false);
 
   constructor(
-    private postsService: PostsService,
-    private commentsService: CommentsService,
-    private authService: AuthService
+    private readonly postsService: PostsService,
+    private readonly commentsService: CommentsService,
+    private readonly authService: AuthService
   ) {}
 
-  ngOnInit() {
-    this.formCom = new FormGroup({
+  ngOnInit(): void {
+    this.formComment = new FormGroup({
       text: new FormControl(null, Validators.required)
     });
 
     this.postsN$ = this.postsService.getAllNews();
-    this.ngcSub = this.commentsService.getAllComments().subscribe(comment => {
-      this.commentsList = comment;
-    });
-
+    this.commentsList$ = this.check$
+      .pipe(switchMap(() => this.commentsService.getAllComments()));
   }
 
-  submitCom() {
-    if (this.formCom.invalid) {
+  submitComment(): void {
+    if (this.formComment.invalid) {
       return;
     }
 
-    const comment: Comment = {
-      text: this.formCom.value.text,
+    const comment: IComment = {
+      text: this.formComment.value.text,
       date: new Date()
     };
 
-    this.cSub = this.commentsService.createComment(comment).subscribe(() => {
-      this.formCom.reset();
-    });
+    this.commentsService.createComment(comment)
+      .pipe(take(1))
+      .subscribe(() => this.check$.next(true));
 
-    setTimeout(() => {
-      this.gcSub = this.commentsService.getAllComments().subscribe(com => {
-        this.commentsList = com;
-      });
-    }, 1000);
+    this.formComment.reset();
   }
 
-  deleteComment(id: string) {
+  deleteComment(id: string): void {
     if (this.authService.isAuthenticated()) {
-      this.dSub = this.commentsService.deleteComment(id).subscribe(() => {
-        this.commentsList = this.commentsList.filter(comment => comment.id !== id);
-      });
+      this.commentsService.deleteComment(id)
+        .pipe(take(1))
+        .subscribe(() => this.check$.next(true));
     }
   }
 
-  ngOnDestroy() {
-    if (this.cSub) {
-      this.cSub.unsubscribe();
-    }
-
-    if (this.ngcSub) {
-      this.ngcSub.unsubscribe();
-    }
-
-    if (this.gcSub) {
-      this.gcSub.unsubscribe();
-    }
-
-    if (this.dSub) {
-      this.dSub.unsubscribe();
-    }
-  }
 }

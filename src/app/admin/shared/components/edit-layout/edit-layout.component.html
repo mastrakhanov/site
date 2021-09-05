@@ -1,60 +1,61 @@
 <div id="edit-layout">
-  <div class="edit-layout__item" *ngIf="postsNews.length; else loadingN">
-    <div class="edit-layout__search">
-      <input class="edit-layout__input" type="text" placeholder="Поиск" [(ngModel)]="searchStr">
-    </div>
-    <h2>Список новостей</h2>
-    <br>
-    <table>
-      <thead>
+  <ng-container *ngIf="postsNews$ | async as postsNews">
+    <div class="edit-layout__item" *ngIf="postsNews?.length; else loadingN">
+      <div class="edit-layout__search">
+        <input class="edit-layout__input" type="text" placeholder="Поиск" [(ngModel)]="searchStr">
+      </div>
+      <h2>Список новостей</h2>
+      <br>
+      <table>
+        <thead>
         <tr>
           <th>№</th>
           <th>Название</th>
           <th>Дата</th>
           <th>Действие</th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <tr *ngFor="let postN of postsNews | searchInfo: searchStr let idxN = index">
           <td>{{ idxN + 1 }}</td>
           <td class="edit-layout__title">{{ postN.title }}</td>
           <td class="edit-layout__date">{{ postN.date | date: 'medium': null: 'ru' }}</td>
           <td class="edit-layout__button">
             <button
-             class="btn"
-             [routerLink]="['/admin', 'edit', 'news', postN.id]"
+              class="btn"
+              [routerLink]="['/admin', 'edit', 'news', postN.id]"
             >
-             Открыть
+              Открыть
             </button>
             <button
               class="btn-remove"
-              (click)="removeN(postN.id)"
+              (click)="removeNew(postN.id)"
             >
-             Удалить
+              Удалить
             </button>
           </td>
         </tr>
-      </tbody>
-    </table>
-    <hr>
-  </div>
+        </tbody>
+      </table>
+      <hr>
+    </div>
+  </ng-container>
 
-  <div class="edit-layout__item"
-  *ngIf="postsModels.length; else loadingM"
-  >
-    <br>
-    <h2>Список моделей</h2>
-    <br>
-    <table>
-      <thead>
+  <ng-container *ngIf="postsModels$ | async as postsModels">
+    <div class="edit-layout__item" *ngIf="postsModels?.length; else loadingM">
+      <br>
+      <h2>Список моделей</h2>
+      <br>
+      <table>
+        <thead>
         <tr>
           <th>№</th>
           <th>Название</th>
           <th>Дата</th>
           <th>Действие</th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <tr *ngFor="let postM of postsModels | searchInfo: searchStr let idxM = index">
           <td>{{ idxM + 1 }}</td>
           <td class="edit-layout__title">{{ postM.title }}</td>
@@ -66,17 +67,17 @@
             >
               Открыть
             </button>
-            <button
-              class="btn-remove"
-              (click)="removeM(postM.id)"
+            <button class="btn-remove"
+              (click)="removeModel(postM.id)"
             >
               Удалить
             </button>
           </td>
         </tr>
-      </tbody>
-    </table>
-  </div>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
 </div>
 
 <ng-template #loadingN>

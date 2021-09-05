@@ -1,8 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PostsService} from '../../../../shared/posts.service';
-import {Post} from '../../../../shared/interface';
-import {Subscription} from 'rxjs';
-import {AlertService} from '../../services/alert.service';
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
+
+import { PostsService } from '../../../../shared/posts.service';
+import { IPost } from '../../../../shared/interface';
+import { AlertService } from '../../services/alert.service';
+
 
 @Component({
   selector: 'app-edit-layout',
@@ -10,54 +13,45 @@ import {AlertService} from '../../services/alert.service';
   styleUrls: ['./edit-layout.component.scss']
 })
 
-export class EditLayoutComponent implements OnInit, OnDestroy {
+export class EditLayoutComponent implements OnInit {
 
-  postsNews: Post[] = [];
-  postsModels: Post[] = [];
-  nSub: Subscription;
-  mSub: Subscription;
-  rnSub: Subscription;
-  rmSub: Subscription;
   searchStr = '';
 
-  constructor(private postService: PostsService,
-              private alert: AlertService) {}
+  postsNews$: Observable<IPost[]> = EMPTY;
+  postsModels$: Observable<IPost[]> = EMPTY;
 
-  ngOnInit() {
-    this.nSub = this.postService.getAllNews().subscribe(posts => {
-    this.postsNews = posts;
-    });
-    this.mSub = this.postService.getAllModels().subscribe(posts => {
-      this.postsModels = posts;
-    });
+  checkModels$ = new BehaviorSubject<boolean>(false);
+  checkNews$ = new BehaviorSubject<boolean>(false);
+
+  constructor(
+    private readonly postService: PostsService,
+    private readonly alert: AlertService
+  ) { }
+
+  ngOnInit(): void {
+    this.postsModels$ = this.checkModels$
+      .pipe(switchMap(() => this.postService.getAllModels()));
+
+    this.postsNews$ = this.checkNews$
+      .pipe(switchMap(() => this.postService.getAllNews()));
   }
 
-  removeN(id: string) {
-    this.rnSub = this.postService.removeNew(id).subscribe(() => {
-    this.postsNews = this.postsNews.filter(postN => postN.id !== id);
-    this.alert.success('Новость успешно удалена');
-    });
+  removeNew(id: string): void {
+    this.postService.removeNew(id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.checkNews$.next(true);
+        this.alert.success('Новость успешно удалена');
+      });
   }
 
-  removeM(id: string) {
-    this.rmSub = this.postService.removeModel(id).subscribe(() => {
-    this.postsModels = this.postsModels.filter(postM => postM.id !== id);
-    this.alert.success('Модель успешно удалена');
-    });
+  removeModel(id: string): void {
+    this.postService.removeModel(id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.checkModels$.next(true);
+        this.alert.success('Модель успешно удалена');
+      });
   }
 
-  ngOnDestroy() {
-    if (this.mSub) {
-      this.mSub.unsubscribe();
-    }
-    if (this.nSub) {
-      this.nSub.unsubscribe();
-    }
-    if (this.rnSub) {
-      this.rnSub.unsubscribe();
-    }
-    if (this.rmSub) {
-      this.rmSub.unsubscribe();
-    }
-  }
 }

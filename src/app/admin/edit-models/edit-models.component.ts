@@ -1,36 +1,36 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Post} from '../../shared/interface';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
-import {PostsService} from '../../shared/posts.service';
-import {ActivatedRoute, Params} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
-import {AlertService} from '../shared/services/alert.service';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
+import { switchMap, take } from 'rxjs/operators';
+
+import { IPost } from '../../shared/interface';
+import { PostsService } from '../../shared/posts.service';
+import { AlertService } from '../shared/services/alert.service';
+
 
 @Component({
   selector: 'app-edit-models',
   templateUrl: './edit-models.component.html',
   styleUrls: ['./edit-models.component.scss']
 })
-export class EditModelsComponent implements OnInit, OnDestroy {
+export class EditModelsComponent implements OnInit {
 
-  post: Post;
   form: FormGroup;
+
+  post: IPost;
   submitted = false;
-  uSub: Subscription;
 
   constructor(
-    private postsService: PostsService,
-    private route: ActivatedRoute,
-    private alertService: AlertService
-  ) {}
+    private readonly postsService: PostsService,
+    private readonly route: ActivatedRoute,
+    private readonly alertService: AlertService
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.pipe(
-      switchMap((params: Params) => {
-        return this.postsService.getByIdModel(params['id']);
-      })
-    ).subscribe((post: Post) => {
+      switchMap((params: Params) => this.postsService.getModelById(params['id']))
+    )
+    .subscribe((post: IPost) => {
       this.post = post;
       this.form = new FormGroup({
         title: new FormControl(post.title, Validators.required),
@@ -39,27 +39,22 @@ export class EditModelsComponent implements OnInit, OnDestroy {
     });
   }
 
-  submit() {
+  submit(): void {
     if (this.form.invalid) {
       return;
     }
 
     this.submitted = true;
 
-    this.uSub = this.postsService.updateModel({
+    this.postsService.updateModel({
       ...this.post,
       text: this.form.value.text,
       title: this.form.value.title
-    }).subscribe(() => {
-      this.submitted = false;
-      this.alertService.success('Модель успешно изменена');
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.uSub) {
-      this.uSub.unsubscribe();
-    }
+    }).pipe(take(1))
+      .subscribe(() => {
+        this.submitted = false;
+        this.alertService.success('Модель успешно изменена');
+      });
   }
 
 }

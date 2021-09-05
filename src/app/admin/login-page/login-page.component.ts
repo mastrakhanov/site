@@ -1,9 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {User} from '../../shared/interface';
-import {AuthService} from '../shared/services/auth.service';
-import {Subscription} from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+import { IUser } from '../../shared/interface';
+import { AuthService } from '../shared/services/auth.service';
+
 
 @Component({
   selector: 'app-login-page',
@@ -13,17 +15,19 @@ import {Subscription} from 'rxjs';
 export class LoginPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
+
   submitted = false;
   message: string;
-  aSub: Subscription;
+
+  aSub: Subscription | null = null;
 
   constructor(
-    public auth: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    public readonly auth: AuthService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
         this.message = 'Пожалуйста, введите данные';
@@ -40,16 +44,16 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     if (this.auth.isAuthenticated()) {
       this.router.navigate(['/admin', 'create']);
     }
-}
+  }
 
-  submit() {
+  submit(): FormGroup | void {
     if (this.form.invalid) {
       return this.form;
     }
 
     this.submitted = true;
 
-    const user: User = {
+    const user: IUser = {
       email: this.form.value.email,
       password: this.form.value.password
     };
@@ -63,7 +67,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.aSub) {
       this.aSub.unsubscribe();
     }

@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {NgModule, Provider} from '@angular/core';
-import {registerLocaleData} from '@angular/common';
+import { NgModule, Provider } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import ruLocale from '@angular/common/locales/ru';
-import {ReactiveFormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,11 +15,9 @@ import { ModelsPageComponent } from './models-page/models-page.component';
 import { NewsPageComponent } from './news-page/news-page.component';
 import { ContactsPageComponent } from './contacts-page/contacts-page.component';
 import { MainLayoutPageComponent } from './main-layout-page/main-layout-page.component';
-import {AuthService} from './admin/shared/services/auth.service';
-import {SharedModule} from './shared/shared.module';
-import {AuthInterceptor} from './shared/auth.interceptor';
+import { SharedModule } from './shared/shared.module';
+import { AuthInterceptor } from './shared/auth.interceptor';
 import { FooterComponent } from './footer/footer.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 registerLocaleData(ruLocale, 'ru');
@@ -28,6 +27,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
   multi: true,
   useClass: AuthInterceptor
 };
+
 
 @NgModule({
   declarations: [
@@ -48,7 +48,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [AuthService, INTERCEPTOR_PROVIDER],
+  providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

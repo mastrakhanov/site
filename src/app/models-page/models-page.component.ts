@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
-import {Post} from '../shared/interface';
-import {ActivatedRoute} from '@angular/router';
-import {PostsService} from '../shared/posts.service';
+import { EMPTY, Observable } from 'rxjs';
+
+import { IPost } from '../shared/interface';
+import { PostsService } from '../shared/posts.service';
+
 
 @Component({
   selector: 'app-models-page',
@@ -11,14 +12,11 @@ import {PostsService} from '../shared/posts.service';
 })
 export class ModelsPageComponent implements OnInit {
 
-  postsM$: Observable<Post[]>;
+  postsM$: Observable<IPost[]> = EMPTY;
 
-  constructor(
-    private route: ActivatedRoute,
-    private postsService: PostsService
-  ) {}
+  constructor(private readonly postsService: PostsService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.postsM$ = this.postsService.getAllModels();
   }
 
