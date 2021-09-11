@@ -3,15 +3,15 @@
     <h2>Добавление модели</h2>
     <div
       class="create-form__main"
-      [ngClass]="{invalid: form.get('title').touched && form.get('title').invalid}"
+      [ngClass]="{invalid: form.get('title')?.touched && form.get('title')?.invalid}"
     >
       <label class="create-form__label" for="title">Название модели:</label>
       <input class="create-form__input" id="title" type="text" formControlName="title">
       <div
-        *ngIf="form.get('title').touched && form.get('title').invalid"
+        *ngIf="form.get('title')?.touched && form.get('title')?.invalid"
         class="validation"
       >
-        <small *ngIf="form.get('title').errors.required">
+        <small *ngIf="form.get('title')?.errors?.required">
           Введите название модели
         </small>
       </div>
@@ -21,10 +21,10 @@
       <quill-editor formControlName="text"></quill-editor>
     </div>
     <div
-      *ngIf="form.get('text').touched && form.get('text').invalid"
+      *ngIf="form.get('text')?.touched && form.get('text')?.invalid"
       class="validation"
     >
-      <small class="quill-validation" *ngIf="form.get('text').errors.required">
+      <small class="quill-validation" *ngIf="form.get('text')?.errors?.required">
         Введите описание модели автомобиля
       </small>
     </div>

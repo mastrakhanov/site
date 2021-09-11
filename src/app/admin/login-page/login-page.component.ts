@@ -21,7 +21,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   });
 
   submitted = false;
-  message: string;
+  message?: string;
 
   aSub: Subscription | null = null;
 

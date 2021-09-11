@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.auth.isAuthenticated()) {
       req = req.clone({
         setParams: {
-          auth: this.auth.token
+          auth: this.auth.token as string
         }
       });
     }

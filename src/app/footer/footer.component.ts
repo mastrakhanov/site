@@ -10,7 +10,7 @@ import { WINDOW } from '@ng-web-apis/common';
 })
 export class FooterComponent implements OnInit {
 
-  year: number;
+  year!: number;
 
   constructor(@Inject(WINDOW) private readonly window: Window) { }
 

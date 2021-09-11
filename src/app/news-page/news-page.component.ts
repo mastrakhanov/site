@@ -22,6 +22,8 @@ export class NewsPageComponent implements OnInit {
     text: new FormControl(null, Validators.required)
   });
 
+  isAuthenticated?: boolean;
+
   commentsList$: Observable<IComment[]> = EMPTY;
   postsN$: Observable<IPost[]> = EMPTY;
 
@@ -37,6 +39,7 @@ export class NewsPageComponent implements OnInit {
     this.postsN$ = this.postsService.getAllNews();
     this.commentsList$ = this.check$
       .pipe(switchMap(() => this.commentsService.getAllComments()));
+    this.isAuthenticated = this.authService.isAuthenticated();
   }
 
   submitComment(): void {
@@ -56,8 +59,8 @@ export class NewsPageComponent implements OnInit {
     this.formComment.reset();
   }
 
-  deleteComment(id: string): void {
-    if (this.authService.isAuthenticated()) {
+  deleteComment(id: string | undefined): void {
+    if (this.authService.isAuthenticated() && id) {
       this.commentsService.deleteComment(id)
         .pipe(take(1))
         .subscribe(() => this.check$.next(true));

@@ -19,7 +19,7 @@
         <tr *ngFor="let postN of postsNews | searchInfo: searchStr let idxN = index">
           <td>{{ idxN + 1 }}</td>
           <td class="edit-layout__title">{{ postN.title }}</td>
-          <td class="edit-layout__date">{{ postN.date | date: 'medium': null: 'ru' }}</td>
+          <td class="edit-layout__date">{{ postN.date | date: 'medium': undefined: 'ru' }}</td>
           <td class="edit-layout__button">
             <button
               class="btn"
@@ -59,7 +59,7 @@
         <tr *ngFor="let postM of postsModels | searchInfo: searchStr let idxM = index">
           <td>{{ idxM + 1 }}</td>
           <td class="edit-layout__title">{{ postM.title }}</td>
-          <td class="edit-layout__date">{{ postM.date | date: 'medium': null: 'ru' }}</td>
+          <td class="edit-layout__date">{{ postM.date | date: 'medium': undefined: 'ru' }}</td>
           <td class="edit-layout__button">
             <button
               class="btn"

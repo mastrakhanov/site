@@ -37,22 +37,26 @@ export class EditLayoutComponent implements OnInit {
       .pipe(switchMap(() => this.postService.getAllNews()));
   }
 
-  removeNew(id: string): void {
-    this.postService.removeNew(id)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.checkNews$.next(true);
-        this.alert.success('Новость успешно удалена');
-      });
+  removeNew(id: string | undefined): void {
+    if (id) {
+      this.postService.removeNew(id)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.checkNews$.next(true);
+          this.alert.success('Новость успешно удалена');
+        });
+    }
   }
 
-  removeModel(id: string): void {
-    this.postService.removeModel(id)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.checkModels$.next(true);
-        this.alert.success('Модель успешно удалена');
-      });
+  removeModel(id: string | undefined): void {
+    if (id) {
+      this.postService.removeModel(id)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.checkModels$.next(true);
+          this.alert.success('Модель успешно удалена');
+        });
+    }
   }
 
 }

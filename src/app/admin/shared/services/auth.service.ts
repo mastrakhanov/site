@@ -19,8 +19,8 @@ export class AuthService {
     @Inject(LOCAL_STORAGE) private readonly localStorage: Storage
   ) { }
 
-  get token(): string {
-    const expiresDate = new Date(this.localStorage.getItem('fb-token-exp'));
+  get token(): string | null {
+    const expiresDate: Date = new Date(this.localStorage.getItem('fb-token-exp') as string);
 
     if (new Date() > expiresDate) {
       this.logout();
@@ -32,7 +32,7 @@ export class AuthService {
 
   login(user: IUser): Observable<any> {
     user.returnSecureToken = true;
-    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
+    return this.http.post<IFbAuthResponse | null>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
       .pipe(
         tap((response: IFbAuthResponse | null) => this.setToken(response)),
         catchError(err => this.handleError(err))

@@ -13,7 +13,7 @@ import { AlertService } from '@admin/shared/services/alert.service';
 export class AlertComponent implements OnInit, OnDestroy {
 
   delay = 5000;
-  public text: string;
+  public text?: string;
   public type = 'success';
 
   aSub: Subscription | null = null;

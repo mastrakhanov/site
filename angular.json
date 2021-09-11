@@ -7,7 +7,11 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "changeDetection": "OnPush"
+        },
+        "@schematics/angular:application": {
+          "strict": true
         }
       },
       "root": "",
@@ -179,12 +183,5 @@
       }
     }
   },
-  "defaultProject": "site",
-  "schematics": {
-    "@schematics/angular": {
-      "component": {
-        "changeDetection": "OnPush"
-      }
-    }
-  }
+  "defaultProject": "site"
 }

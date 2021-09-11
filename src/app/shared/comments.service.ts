@@ -14,7 +14,7 @@ export class CommentsService {
   constructor(private readonly http: HttpClient) { }
 
   createComment(comment: IComment): Observable<IComment> {
-    return this.http.post(`${environment.fbDbUrl}/comments/news.json`, comment)
+    return this.http.post<IFbCreateResponse>(`${environment.fbDbUrl}/comments/news.json`, comment)
       .pipe(map((response: IFbCreateResponse) => ({
         ...comment,
         id: response.name,

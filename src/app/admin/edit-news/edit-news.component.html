@@ -3,15 +3,15 @@
     <h2>Редактирование новости</h2>
     <div
       class="edit-form__main"
-      [ngClass]="{invalid: form.get('title').touched && form.get('title').invalid}"
+      [ngClass]="{invalid: form.get('title')?.touched && form.get('title')?.invalid}"
     >
       <label class="edit-form__label" for="title">Название новости:</label>
       <input class="edit-form__input" id="title" type="text" formControlName="title">
       <div
-        *ngIf="form.get('title').touched && form.get('title').invalid"
+        *ngIf="form.get('title')?.touched && form.get('title')?.invalid"
         class="validation"
       >
-        <small *ngIf="form.get('title').errors.required">
+        <small *ngIf="form.get('title')?.errors?.required">
           Введите название новости
         </small>
       </div>
@@ -21,10 +21,10 @@
       <quill-editor formControlName="text"></quill-editor>
     </div>
     <div
-      *ngIf="form.get('text').touched && form.get('text').invalid"
+      *ngIf="form.get('text')?.touched && form.get('text')?.invalid"
       class="validation"
     >
-      <small class="quill-validation" *ngIf="form.get('text').errors.required">
+      <small class="quill-validation" *ngIf="form.get('text')?.errors?.required">
         Введите текст новости
       </small>
     </div>

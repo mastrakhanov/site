@@ -17,9 +17,9 @@ import { AlertService } from '@admin/shared/services/alert.service';
 })
 export class EditNewsComponent implements OnInit {
 
-  form: FormGroup;
+  form?: FormGroup;
 
-  post: IPost;
+  post?: IPost;
   submitted = false;
 
   disabled$: Observable<boolean> = EMPTY;
@@ -49,7 +49,7 @@ export class EditNewsComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.form.invalid) {
+    if (this.form?.invalid) {
       return;
     }
 
@@ -57,9 +57,9 @@ export class EditNewsComponent implements OnInit {
 
     this.postsService.updateNew({
       ...this.post,
-      text: this.form.value.text,
-      title: this.form.value.title
-    }).pipe(take(1))
+      text: this.form?.value.text,
+      title: this.form?.value.title
+    } as IPost).pipe(take(1))
       .subscribe(() => {
         this.submitted = false;
         this.alertService.success('Новость успешно изменена');

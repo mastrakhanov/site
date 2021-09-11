@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class RegistrationPageComponent implements OnInit {
 
-  form: FormGroup;
+  form!: FormGroup;
   isVisible = false;
 
   ngOnInit(): void {
@@ -24,11 +24,11 @@ export class RegistrationPageComponent implements OnInit {
       city: new FormControl(''),
       country: new FormControl(''),
       about: new FormControl ('')
-    }, this.pwdMatchValidator);
+    }, this.pwdMatchValidator as ValidatorFn);
   }
 
   pwdMatchValidator = (form: FormGroup): { mismatch: true } | null =>
-    form.get('pass').value === form.get('conf_pass').value
+    form.get('pass')?.value === form.get('conf_pass')?.value
       ? null
       : { mismatch: true };
 
