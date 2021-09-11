@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { IPost } from '../../shared/interface';
-import { PostsService } from '../../shared/posts.service';
-import { AlertService } from '../shared/services/alert.service';
+import { IPost } from '@app/shared/interface';
+import { PostsService } from '@app/shared/posts.service';
+import { AlertService } from '@admin/shared/services/alert.service';
 
 
 @Component({

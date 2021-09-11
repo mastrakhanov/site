@@ -4,8 +4,8 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LOCAL_STORAGE } from '@ng-web-apis/common';
 
-import { IFbAuthResponse, IUser } from '../../../shared/interface';
-import { environment } from '../../../../environments/environment';
+import { IFbAuthResponse, IUser } from '@app/shared/interface';
+import { environment } from '@src/environments/environment';
 
 
 @Injectable({ providedIn: 'root' })

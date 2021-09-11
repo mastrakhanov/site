@@ -4,9 +4,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 
-import { PostsService } from '../../shared/posts.service';
-import { IPost } from '../../shared/interface';
-import { AlertService } from '../shared/services/alert.service';
+import { PostsService } from '@app/shared/posts.service';
+import { IPost } from '@app/shared/interface';
+import { AlertService } from '@admin/shared/services/alert.service';
 
 
 @Component({

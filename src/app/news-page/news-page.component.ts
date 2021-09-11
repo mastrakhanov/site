@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
-import { IComment, IPost } from '../shared/interface';
-import { PostsService } from '../shared/posts.service';
-import { CommentsService } from '../shared/comments.service';
-import { AuthService } from '../admin/shared/services/auth.service';
+import { IComment, IPost } from '@app/shared/interface';
+import { PostsService } from '@app/shared/posts.service';
+import { CommentsService } from '@app/shared/comments.service';
+import { AuthService } from '@admin/shared/services/auth.service';
 
 
 @Component({

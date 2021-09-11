@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 
-import { IPost } from '../shared/interface';
-import { PostsService } from '../shared/posts.service';
+import { IPost } from '@app/shared/interface';
+import { PostsService } from '@app/shared/posts.service';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AlertService } from '../../services/alert.service';
+import { AlertService } from '@admin/shared/services/alert.service';
 
 
 @Component({

@@ -3,20 +3,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { SharedModule } from '@app/shared/shared.module';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AdminLayoutComponent } from './shared/components/admin-layout/admin-layout.component';
-import { AuthGuard } from './shared/services/auth.guard';
 import { CreateLayoutComponent } from './shared/components/create-layout/create-layout.component';
 import { CreateNewsComponent } from './create-news/create-news.component';
 import { CreateModelsComponent } from './create-models/create-models.component';
-import { SharedModule } from '../shared/shared.module';
 import { EditNewsComponent } from './edit-news/edit-news.component';
 import { EditModelsComponent } from './edit-models/edit-models.component';
 import { EditLayoutComponent } from './shared/components/edit-layout/edit-layout.component';
+import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import { AuthGuard } from './shared/services/auth.guard';
 import { AlertService } from './shared/services/alert.service';
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { SearchPipe } from './shared/search.pipe';
-import { RegistrationPageComponent } from './registration-page/registration-page.component';
 
 
 @NgModule({

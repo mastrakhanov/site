@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { IPost } from '../../shared/interface';
+import { IPost } from '@app/shared/interface';
 
 
 @Pipe({ name: 'searchInfo' })

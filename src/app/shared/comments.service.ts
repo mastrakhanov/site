@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IComment, IFbCreateResponse } from './interface';
-import { environment } from '../../environments/environment';
 import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import { environment } from '@src/environments/environment';
+import { IComment, IFbCreateResponse } from './interface';
 
 
 @Injectable({ providedIn: 'root' })

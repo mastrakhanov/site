@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
-import { PostsService } from '../../../../shared/posts.service';
-import { IPost } from '../../../../shared/interface';
-import { AlertService } from '../../services/alert.service';
+import { PostsService } from '@app/shared/posts.service';
+import { IPost } from '@app/shared/interface';
+import { AlertService } from '@admin/shared/services/alert.service';
 
 
 @Component({
