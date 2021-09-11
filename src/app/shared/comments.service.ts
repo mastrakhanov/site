@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { environment } from '@src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { IComment, IFbCreateResponse } from './interface';
 
 

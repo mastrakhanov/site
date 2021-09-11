@@ -5,7 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { LOCAL_STORAGE } from '@ng-web-apis/common';
 
 import { IFbAuthResponse, IUser } from '@app/shared/interface';
-import { environment } from '@src/environments/environment';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({ providedIn: 'root' })
