@@ -1,23 +1,35 @@
-import { TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { AppComponent } from './app.component';
 
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let element: HTMLElement;
+
+  beforeEach(async () => {
     TestBed.configureTestingModule({
+      declarations: [AppComponent],
       imports: [
         RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      ]
     }).compileComponents();
-  }));
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
+  });
+
+  it('should contain router-outlet tag', () => {
+    element = fixture.nativeElement;
+    expect(element.innerHTML).toContain('router-outlet');
   });
 });

@@ -3,6 +3,14 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "paths": {
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@admin/*": [
+        "src/app/admin/*"
+      ]
+    },
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
