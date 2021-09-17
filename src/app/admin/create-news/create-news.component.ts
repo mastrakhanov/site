@@ -39,7 +39,7 @@ export class CreateNewsComponent {
       date: new Date()
     };
 
-    this.postsService.createNews(post)
+    this.postsService.createNew(post)
       .pipe(take(1))
       .subscribe(() => {
         this.form.reset();

@@ -61,7 +61,7 @@ export class NewsPageComponent implements OnInit {
 
   deleteComment(id: string | undefined): void {
     if (this.authService.isAuthenticated() && id) {
-      this.commentsService.deleteComment(id)
+      this.commentsService.removeComment(id)
         .pipe(take(1))
         .subscribe(() => this.check$.next(true));
     }

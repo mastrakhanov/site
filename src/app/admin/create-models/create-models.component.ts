@@ -39,7 +39,7 @@ export class CreateModelsComponent {
       date: new Date()
     };
 
-    this.postsService.createModels(post)
+    this.postsService.createModel(post)
       .pipe(take(1))
       .subscribe(() => {
         this.form.reset();

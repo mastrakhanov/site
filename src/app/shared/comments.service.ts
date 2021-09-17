@@ -22,11 +22,11 @@ export class CommentsService {
       })));
   }
 
-  deleteComment = (id: string): Observable<void> =>
+  removeComment = (id: string): Observable<void> =>
     this.http.delete<void>(`${environment.fbDbUrl}/comments/news/${id}.json`);
 
   getAllComments(): Observable<IComment[]> {
-    return this.http.get(`${environment.fbDbUrl}/comments/news.json`)
+    return this.http.get<IComment[]>(`${environment.fbDbUrl}/comments/news.json`)
       .pipe(
         filter(x => !!x),
         map((response: {[key: string]: any}) =>

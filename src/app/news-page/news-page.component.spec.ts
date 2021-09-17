@@ -100,10 +100,10 @@ describe('NewsPageComponent', () => {
     expect(commentsService.createComment).toHaveBeenCalled();
   });
 
-  it('should deleteComment() delete comment', () => {
-    spyOn(commentsService, 'deleteComment').and.returnValue(of());
+  it('should deleteComment() remove comment', () => {
+    spyOn(commentsService, 'removeComment').and.returnValue(of());
     spyOn(authService, 'isAuthenticated').and.returnValue(true);
     component.deleteComment('1');
-    expect(commentsService.deleteComment).toHaveBeenCalledWith('1');
+    expect(commentsService.removeComment).toHaveBeenCalledWith('1');
   });
 });
