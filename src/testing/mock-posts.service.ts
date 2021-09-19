@@ -4,9 +4,9 @@ import { IPost } from '@app/shared/interface';
 
 
 export class MockPostsService {
-  createNews = (post: IPost): Observable<IPost> => of(post);
+  createNew = (post: IPost): Observable<IPost> => of(post);
 
-  createModels = (post: IPost): Observable<IPost> => of(post);
+  createModel = (post: IPost): Observable<IPost> => of(post);
 
   getAllNews = (): Observable<IPost[]> => of([{ id: '1', title: 'title', text: 'text', date: new Date(0) }]);
 
@@ -16,9 +16,9 @@ export class MockPostsService {
 
   getModelById = (id: string): Observable<IPost> => of({ id: '1', title: 'title', text: 'text', date: new Date(0) });
 
-  removeNew = (id: string): Observable<void> => of();
+  removeNew = (id: string): Observable<void> => of(null);
 
-  removeModel = (id: string): Observable<void> => of();
+  removeModel = (id: string): Observable<void> => of(null);
 
   updateNew = (post: IPost): Observable<IPost> => of(post);
 

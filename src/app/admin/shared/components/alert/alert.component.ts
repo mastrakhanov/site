@@ -16,7 +16,7 @@ export class AlertComponent implements OnInit, OnDestroy {
   public text?: string;
   public type = 'success';
 
-  aSub: Subscription | null = null;
+  private aSub: Subscription | null = null;
 
   constructor(
     private readonly alertService: AlertService,

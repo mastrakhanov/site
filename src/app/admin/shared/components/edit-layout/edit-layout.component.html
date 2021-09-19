@@ -1,6 +1,6 @@
 <div id="edit-layout">
   <ng-container *ngIf="postsNews$ | async as postsNews">
-    <div class="edit-layout__item" *ngIf="postsNews?.length; else loadingN">
+    <div class="edit-layout__item" *ngIf="postsNews?.length; else loading">
       <div class="edit-layout__search">
         <input class="edit-layout__input" type="text" placeholder="Поиск" [(ngModel)]="searchStr">
       </div>
@@ -42,7 +42,7 @@
   </ng-container>
 
   <ng-container *ngIf="postsModels$ | async as postsModels">
-    <div class="edit-layout__item" *ngIf="postsModels?.length; else loadingM">
+    <div class="edit-layout__item" *ngIf="postsModels?.length; else loading">
       <br>
       <h2>Список моделей</h2>
       <br>
@@ -80,14 +80,8 @@
   </ng-container>
 </div>
 
-<ng-template #loadingN>
+<ng-template #loading>
   <svg class="spinner-news" viewBox="0 0 50 50">
-    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-  </svg>
-</ng-template>
-
-<ng-template #loadingM>
-  <svg class="spinner-models" viewBox="0 0 50 50">
     <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
   </svg>
 </ng-template>

@@ -26,7 +26,7 @@ export class EditLayoutComponent implements OnInit {
 
   constructor(
     private readonly postService: PostsService,
-    private readonly alert: AlertService
+    private readonly alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -41,9 +41,14 @@ export class EditLayoutComponent implements OnInit {
     if (id) {
       this.postService.removeNew(id)
         .pipe(take(1))
-        .subscribe(() => {
-          this.checkNews$.next(true);
-          this.alert.success('Новость успешно удалена');
+        .subscribe({
+          next: () => {
+            this.checkNews$.next(true);
+            this.alertService.success('Новость успешно удалена');
+          },
+          error: (error) => {
+            this.alertService.danger(`Новость не удалена. Ошибка: ${error.message}`);
+          }
         });
     }
   }
@@ -52,9 +57,14 @@ export class EditLayoutComponent implements OnInit {
     if (id) {
       this.postService.removeModel(id)
         .pipe(take(1))
-        .subscribe(() => {
-          this.checkModels$.next(true);
-          this.alert.success('Модель успешно удалена');
+        .subscribe({
+          next: () => {
+            this.checkModels$.next(true);
+            this.alertService.success('Модель успешно удалена');
+          },
+          error: (error) => {
+            this.alertService.danger(`Модель не удалена. Ошибка: ${error.message}`);
+          }
         });
     }
   }

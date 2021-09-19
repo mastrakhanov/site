@@ -61,6 +61,16 @@ describe('NewsPageComponent', () => {
     expect(element.innerHTML).toContain('app-footer');
   });
 
+  it('should contain "title"', () => {
+    element = fixture.nativeElement.querySelector('.news-content h2');
+    expect(element.textContent).toContain('title');
+  });
+
+  it('should contain "text"', () => {
+    element = fixture.nativeElement.querySelector('.comments-list__item p');
+    expect(element.textContent).toContain('text');
+  });
+
   it('should contain "Комментарии"', () => {
     element = fixture.nativeElement.querySelector('.comments-content h2');
     expect(element.textContent).toContain('Комментарии');

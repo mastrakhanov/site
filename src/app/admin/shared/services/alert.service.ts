@@ -16,12 +16,12 @@ export class AlertService {
   public alert$ = new Subject<IAlert>();
 
   success = (text: string): void =>
-    this.alert$.next({type: 'success', text});
+    this.alert$.next({ type: 'success', text });
 
   warning = (text: string): void =>
-    this.alert$.next({type: 'warning', text});
+    this.alert$.next({ type: 'warning', text });
 
   danger = (text: string): void =>
-    this.alert$.next({type: 'danger', text});
+    this.alert$.next({ type: 'danger', text });
 
 }

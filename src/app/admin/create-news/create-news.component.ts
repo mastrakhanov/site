@@ -41,9 +41,14 @@ export class CreateNewsComponent {
 
     this.postsService.createNew(post)
       .pipe(take(1))
-      .subscribe(() => {
-        this.form.reset();
-        this.alertService.success('Новость успешно создана');
+      .subscribe({
+        next: () => {
+          this.form.reset();
+          this.alertService.success('Новость успешно создана');
+        },
+        error: (error) => {
+          this.alertService.danger(`Новость не создана. Ошибка: ${error.message}`);
+        }
       });
   }
 

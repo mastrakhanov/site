@@ -60,10 +60,15 @@ export class EditModelsComponent implements OnInit {
       text: this.form?.value.text,
       title: this.form?.value.title
     } as IPost).pipe(take(1))
-      .subscribe(() => {
-        this.submitted = false;
-        this.alertService.success('Модель успешно изменена');
-        this.changeDetectorRef.markForCheck();
+      .subscribe({
+        next: () => {
+          this.submitted = false;
+          this.alertService.success('Модель успешно изменена');
+          this.changeDetectorRef.markForCheck();
+        },
+        error: (error) => {
+          this.alertService.danger(`Модель не изменена. Ошибка: ${error.message}`);
+        }
       });
   }
 

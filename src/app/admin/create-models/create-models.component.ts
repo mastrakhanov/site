@@ -41,9 +41,14 @@ export class CreateModelsComponent {
 
     this.postsService.createModel(post)
       .pipe(take(1))
-      .subscribe(() => {
-        this.form.reset();
-        this.alertService.success('Модель успешно создана');
+      .subscribe({
+        next: () => {
+          this.form.reset();
+          this.alertService.success('Модель успешно создана');
+        },
+        error: (error) => {
+          this.alertService.danger(`Модель не создана. Ошибка: ${error.message}`);
+        }
       });
   }
 

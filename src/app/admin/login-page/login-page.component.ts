@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   submitted = false;
   message?: string;
 
-  aSub: Subscription | null = null;
+  private aSub: Subscription | null = null;
 
   constructor(
     public readonly auth: AuthService,
