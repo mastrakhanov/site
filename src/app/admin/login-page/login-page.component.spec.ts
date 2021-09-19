@@ -6,6 +6,11 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
 import { AuthService } from '@admin/shared/services/auth.service';
+import { AuthGuard } from '@admin/shared/services/auth.guard';
+import { CreateLayoutComponent } from '@admin/shared/components/create-layout/create-layout.component';
+import { AdminLayoutComponent } from '@admin/shared/components/admin-layout/admin-layout.component';
+import { CreateNewsComponent } from '@admin/create-news/create-news.component';
+import { CreateModelsComponent } from '@admin/create-models/create-models.component';
 import { LoginPageComponent } from './login-page.component';
 
 
@@ -22,7 +27,16 @@ describe('LoginPageComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule.withRoutes([{
+          path: '', component: AdminLayoutComponent, children: [
+            { path: '', redirectTo: '/admin/login', pathMatch: 'full' },
+            { path: 'login', component: LoginPageComponent },
+            { path: 'create', component: CreateLayoutComponent, children: [
+                { path: 'news', component: CreateNewsComponent },
+                { path: 'models', component: CreateModelsComponent }
+              ], canActivate: [AuthGuard]
+            }
+          ]}])
       ]
     }).compileComponents();
   });
@@ -31,6 +45,7 @@ describe('LoginPageComponent', () => {
     fixture = TestBed.createComponent(LoginPageComponent);
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService);
+    authService.isAuthenticated = () => false;
     router = TestBed.inject(Router);
     fixture.detectChanges();
   });

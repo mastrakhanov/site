@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Autoplay, SwiperOptions } from 'swiper';
+import SwiperCore, { Pagination } from 'swiper';
 
+
+SwiperCore.use([Pagination, Autoplay]);
 
 @Component({
   selector: 'app-main-page',
@@ -7,16 +11,14 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: ['./main-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainPageComponent implements OnInit {
+export class MainPageComponent {
 
-  ngOnInit(): void {
-    // @ts-ignore
-    $(() => $('.main-content__slider').unslider({
-      autoplay: true,
-      speed: 750,
-      delay: 5000,
-      arrows: false
-    }));
-  }
+  config: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 50,
+    loop: true,
+    autoplay: { delay: 5000, disableOnInteraction: false },
+    pagination: { clickable: true }
+  };
 
 }

@@ -1,8 +1,12 @@
 @import "../node_modules/quill/dist/quill.core.css";
 @import "../node_modules/quill/dist/quill.snow.css";
-@import "assets/css/unslider-dots.css";
-@import "assets/css/unslider.css";
 @import "assets/fonts/fonts";
+
+$themeColor: brown;
+
+@import "../node_modules/swiper/swiper";
+@import "../node_modules/swiper/modules/pagination/pagination";
+@import "../node_modules/swiper/modules/autoplay/autoplay";
 
 
 * {

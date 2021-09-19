@@ -1,20 +1,13 @@
 <div id="wrapper">
-  <div class="main-content__slider">
-    <ul>
-      <li>
-        <img class="image__slider" src="../../assets/Office.jpg" alt="1">
-      </li>
-      <li>
-        <img class="image__slider" src="../../assets/Office_2.jpg" alt="2">
-      </li>
-      <li>
-        <img class="image__slider" src="../../assets/Office_3.jpg" alt="3">
-      </li>
-      <li>
-        <img class="image__slider" src="../../assets/Office_4.jpg" alt="3">
-      </li>
-    </ul>
-  </div>
+  <swiper
+    class="main-content__slider"
+    [config]="config"
+  >
+    <ng-template swiperSlide><img class="image__slider" src="../../assets/Office.jpg" alt="1"></ng-template>
+    <ng-template swiperSlide><img class="image__slider" src="../../assets/Office_2.jpg" alt="2"></ng-template>
+    <ng-template swiperSlide><img class="image__slider" src="../../assets/Office_3.jpg" alt="3"></ng-template>
+    <ng-template swiperSlide><img class="image__slider" src="../../assets/Office_4.jpg" alt="3"></ng-template>
+  </swiper>
   <div class="main-content__info">
     <div class="main-content__about">
       <article class="main-content__infoLeft">

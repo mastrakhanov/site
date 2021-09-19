@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SwiperModule } from 'swiper/angular';
 
 import { FooterComponent } from '@app/footer/footer.component';
 import { MainPageComponent } from './main-page.component';
@@ -11,7 +12,10 @@ describe('MainPageComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      declarations: [MainPageComponent/*, FooterComponent*/],
+      declarations: [MainPageComponent, FooterComponent],
+      imports: [
+        SwiperModule
+      ]
     }).compileComponents();
   });
 
@@ -21,19 +25,20 @@ describe('MainPageComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-  // it('should contain tags', () => {
-  //   element = fixture.nativeElement;
-  //   expect(element.innerHTML).toContain('aside');
-  //   expect(element.innerHTML).toContain('article');
-  //   expect(element.innerHTML).toContain('app-footer');
-  // });
-  //
-  // it('should contain "Bugatti"', () => {
-  //   element = fixture.nativeElement.querySelector('h1');
-  //   expect(element.textContent).toContain('Bugatti');
-  // });
+  it('should contain tags', () => {
+    element = fixture.nativeElement;
+    expect(element.innerHTML).toContain('swiper');
+    expect(element.innerHTML).toContain('aside');
+    expect(element.innerHTML).toContain('article');
+    expect(element.innerHTML).toContain('app-footer');
+  });
+
+  it('should contain "Bugatti"', () => {
+    element = fixture.nativeElement.querySelector('h1');
+    expect(element.textContent).toContain('Bugatti');
+  });
 });
