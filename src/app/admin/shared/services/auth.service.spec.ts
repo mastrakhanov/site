@@ -58,11 +58,13 @@ describe('AuthService', () => {
   });
 
   it('should return null', () => {
+    loginMock();
     authService.logout();
     expect(authService.token).toBe(null);
   });
 
   it('should isAuthenticated to be false', () => {
+    loginMock();
     authService.logout();
     expect(authService.isAuthenticated()).toBeFalse();
   });
