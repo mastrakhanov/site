@@ -1,9 +1,7 @@
 @import "../node_modules/quill/dist/quill.core.css";
 @import "../node_modules/quill/dist/quill.snow.css";
 @import "assets/fonts/fonts";
-
-$themeColor: brown;
-
+@import "app/shared/styles/params";
 @import "../node_modules/swiper/swiper";
 @import "../node_modules/swiper/modules/pagination/pagination";
 @import "../node_modules/swiper/modules/autoplay/autoplay";

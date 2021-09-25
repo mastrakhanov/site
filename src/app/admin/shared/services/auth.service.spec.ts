@@ -15,7 +15,7 @@ describe('AuthService', () => {
   const userStub: IUser = { email: 'xxx@yandex.ru', password: 'password', returnSecureToken: true };
   const authResponseStub: IFbAuthResponse = { idToken: 'token', expiresIn: '5000' };
 
-  function loginMock() {
+  function loginMock(): void {
     authService.login(userStub).subscribe(response => expect(response).toEqual(authResponseStub));
     const req = httpTestingController.expectOne(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`);
     expect(req.request.method).toEqual('POST');

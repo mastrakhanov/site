@@ -52,7 +52,7 @@ describe('PostsService', () => {
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news.json`);
     expect(req.request.method).toEqual('GET');
 
-    req.flush({ '1': postsStub });
+    req.flush({ 1: postsStub });
   });
 
   it('should return all models', () => {
@@ -60,7 +60,7 @@ describe('PostsService', () => {
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/models.json`);
     expect(req.request.method).toEqual('GET');
 
-    req.flush({ '1': postsStub });
+    req.flush({ 1: postsStub });
   });
 
   it('should return new by id', () => {

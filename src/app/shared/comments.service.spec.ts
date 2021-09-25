@@ -52,6 +52,6 @@ describe('CommentsService', () => {
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/comments/news.json`);
     expect(req.request.method).toEqual('GET');
 
-    req.flush({ '1': commentStub });
+    req.flush({ 1: commentStub });
   });
 });
