@@ -33,6 +33,7 @@ export class EditNewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.pipe(
+      // eslint-disable-next-line @typescript-eslint/dot-notation
       switchMap((params: Params) => this.postsService.getNewById(params['id']))
     )
     .subscribe((post: IPost) => {

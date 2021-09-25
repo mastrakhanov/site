@@ -20,7 +20,7 @@ export class RegistrationPageComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       personal: new FormControl('', Validators.requiredTrue),
       pass: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      conf_pass: new FormControl('', [Validators.required]),
+      confPass: new FormControl('', [Validators.required]),
       city: new FormControl(''),
       country: new FormControl(''),
       about: new FormControl ('')
@@ -28,7 +28,7 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   pwdMatchValidator = (form: FormGroup): { mismatch: true } | null =>
-    form.get('pass')?.value === form.get('conf_pass')?.value
+    form.get('pass')?.value === form.get('confPass')?.value
       ? null
       : { mismatch: true };
 

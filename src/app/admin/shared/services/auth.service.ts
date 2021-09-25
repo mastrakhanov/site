@@ -32,7 +32,10 @@ export class AuthService {
 
   login(user: IUser): Observable<any> {
     user.returnSecureToken = true;
-    return this.http.post<IFbAuthResponse | null>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
+    return this.http.post<IFbAuthResponse | null>(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
+      user
+    )
       .pipe(
         tap((response: IFbAuthResponse | null) => this.setToken(response)),
         catchError(err => this.handleError(err))

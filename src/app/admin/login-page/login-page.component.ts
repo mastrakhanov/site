@@ -33,8 +33,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
+      // eslint-disable-next-line @typescript-eslint/dot-notation
       if (params['loginAgain']) {
         this.message = 'Пожалуйста, введите данные';
+        // eslint-disable-next-line @typescript-eslint/dot-notation
       } else if (params ['authFailed']) {
         this.message = 'Сессия истекла. Введите данные заново.';
       }
