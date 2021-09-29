@@ -19,7 +19,7 @@ describe('AdminLayoutComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [AdminLayoutComponent, AlertComponent],
       imports: [
         HttpClientTestingModule,

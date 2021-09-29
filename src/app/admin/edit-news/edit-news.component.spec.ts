@@ -3,13 +3,17 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { QuillModule } from 'ngx-quill';
 
+import { mockStoreInitialState } from 'src/testing/mock-store-initial-state';
+import { newsStub } from 'src/testing/news-stub';
+
 import { MockPostsService } from 'src/testing/mock-posts.service';
-import { IPost } from '@app/shared/interface';
 import { PostsService } from '@app/shared/posts.service';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as newsActions from '@app/store/actions/news';
 
 import { EditNewsComponent } from './edit-news.component';
 
@@ -17,13 +21,11 @@ import { EditNewsComponent } from './edit-news.component';
 describe('EditNewsComponent', () => {
   let component: EditNewsComponent;
   let fixture: ComponentFixture<EditNewsComponent>;
-  let alertService: AlertService;
+  let store: Store;
   let element: HTMLElement;
 
-  const postStub: IPost = { id: '1', title: 'title', text: 'text', date: new Date(0) };
-
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [EditNewsComponent],
       imports: [
         HttpClientTestingModule,
@@ -32,9 +34,9 @@ describe('EditNewsComponent', () => {
         QuillModule
       ],
       providers: [
+        provideMockStore({ initialState: mockStoreInitialState }),
         { provide: PostsService, useClass: MockPostsService },
-        { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } },
-        AlertService
+        { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } }
       ]
     }).compileComponents();
   });
@@ -42,7 +44,7 @@ describe('EditNewsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditNewsComponent);
     component = fixture.componentInstance;
-    alertService = TestBed.inject(AlertService);
+    store = TestBed.inject(Store);
     fixture.detectChanges();
   });
 
@@ -77,20 +79,19 @@ describe('EditNewsComponent', () => {
     expect(element.textContent).toContain('Обновить');
   });
 
-  it('should post value to be postStub', () => {
+  it('should post value to be newsStub', () => {
     component.ngOnInit();
-    expect(component.post).toEqual(postStub);
+    expect(component.post).toEqual(newsStub);
   });
 
   it('should form value must obtained from post', () => {
     component.ngOnInit();
-    expect(component.form.value).toEqual({ title: 'title', text: 'text' });
+    expect(component.form.value).toEqual({ title: newsStub.title, text: newsStub.text });
   });
 
-  it('should call alertService success()', () => {
-    spyOn(alertService, 'success');
-    component.form.setValue({ title: 'title', text: 'text' });
+  it('should call store dispatch()', () => {
+    spyOn(store, 'dispatch');
     component.submit();
-    expect(alertService.success).toHaveBeenCalledWith('Новость успешно изменена');
+    expect(store.dispatch).toHaveBeenCalledWith(newsActions.update({ news: newsStub }));
   });
 });

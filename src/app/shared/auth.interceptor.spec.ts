@@ -8,8 +8,8 @@ import { AuthInterceptor } from './auth.interceptor';
 describe('AuthInterceptor', () => {
   let authInterceptor: AuthInterceptor;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule

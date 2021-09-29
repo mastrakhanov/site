@@ -25,8 +25,8 @@ describe('AuthService', () => {
     req.flush(authResponseStub);
   };
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
       ]

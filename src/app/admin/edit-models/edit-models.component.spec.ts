@@ -3,13 +3,17 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { QuillModule } from 'ngx-quill';
 
+import { mockStoreInitialState } from 'src/testing/mock-store-initial-state';
 import { MockPostsService } from 'src/testing/mock-posts.service';
-import { IPost } from '@app/shared/interface';
+import { modelStub } from 'src/testing/model-stub';
+
 import { PostsService } from '@app/shared/posts.service';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as modelsActions from '@app/store/actions/models';
 
 import { EditModelsComponent } from './edit-models.component';
 
@@ -17,13 +21,11 @@ import { EditModelsComponent } from './edit-models.component';
 describe('EditModelsComponent', () => {
   let component: EditModelsComponent;
   let fixture: ComponentFixture<EditModelsComponent>;
-  let alertService: AlertService;
+  let store: Store;
   let element: HTMLElement;
 
-  const postStub: IPost = { id: '1', title: 'title', text: 'text', date: new Date(0) };
-
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [EditModelsComponent],
       imports: [
         HttpClientTestingModule,
@@ -32,9 +34,9 @@ describe('EditModelsComponent', () => {
         QuillModule
       ],
       providers: [
+        provideMockStore({ initialState: mockStoreInitialState }),
         { provide: PostsService, useClass: MockPostsService },
-        { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } },
-        AlertService
+        { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } }
       ]
     }).compileComponents();
   });
@@ -42,7 +44,7 @@ describe('EditModelsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditModelsComponent);
     component = fixture.componentInstance;
-    alertService = TestBed.inject(AlertService);
+    store = TestBed.inject(Store);
     fixture.detectChanges();
   });
 
@@ -77,20 +79,19 @@ describe('EditModelsComponent', () => {
     expect(element.textContent).toContain('Обновить');
   });
 
-  it('should post value to be postStub', () => {
+  it('should post value to be modelStub', () => {
     component.ngOnInit();
-    expect(component.post).toEqual(postStub);
+    expect(component.post).toEqual(modelStub);
   });
 
   it('should form value must obtained from post', () => {
     component.ngOnInit();
-    expect(component.form.value).toEqual({ title: 'title', text: 'text' });
+    expect(component.form.value).toEqual({ title: modelStub.title, text: modelStub.text });
   });
 
-  it('should call alertService success()', () => {
-    spyOn(alertService, 'success');
-    component.form.setValue({ title: 'title', text: 'text' });
+  it('submit() should call store dispatch()', () => {
+    spyOn(store, 'dispatch');
     component.submit();
-    expect(alertService.success).toHaveBeenCalledWith('Модель успешно изменена');
+    expect(store.dispatch).toHaveBeenCalledWith(modelsActions.update({ model: modelStub }));
   });
 });

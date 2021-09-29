@@ -6,8 +6,8 @@ import { AlertService } from './alert.service';
 describe('AlertService', () => {
   let alertService: AlertService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       providers: [AlertService]
     });
 

@@ -8,8 +8,8 @@ import { AuthGuard } from './auth.guard';
 describe('AuthGuard', () => {
   let authGuard: AuthGuard;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         HttpClientTestingModule

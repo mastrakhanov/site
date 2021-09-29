@@ -13,7 +13,7 @@ describe('AlertComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [AlertComponent],
       imports: [
         RouterTestingModule

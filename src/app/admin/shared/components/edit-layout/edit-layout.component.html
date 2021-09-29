@@ -1,6 +1,6 @@
 <div id="edit-layout">
-  <ng-container *ngIf="postsNews$ | async as postsNews">
-    <div class="edit-layout__item" *ngIf="postsNews?.length; else loading">
+  <ng-container *ngIf="!(loadingNews$ | async); else loading">
+    <div class="edit-layout__item" *ngIf="postsNews$ | async as postsNews">
       <div class="edit-layout__search">
         <input class="edit-layout__input" type="text" placeholder="Поиск" [(ngModel)]="searchStr">
       </div>
@@ -29,7 +29,7 @@
             </button>
             <button
               class="btn-remove"
-              (click)="removeNew(postN.id)"
+              (click)="removeNews(postN.id)"
             >
               Удалить
             </button>
@@ -41,8 +41,8 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="postsModels$ | async as postsModels">
-    <div class="edit-layout__item" *ngIf="postsModels?.length; else loading">
+  <ng-container *ngIf="!(loadingModels$ | async); else loading">
+    <div class="edit-layout__item" *ngIf="postsModels$ | async as postsModels">
       <br>
       <h2>Список моделей</h2>
       <br>

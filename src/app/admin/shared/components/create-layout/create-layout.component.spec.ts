@@ -10,7 +10,7 @@ describe('CreateLayoutComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [CreateLayoutComponent],
       imports: [
         RouterTestingModule

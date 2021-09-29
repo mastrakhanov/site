@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { EMPTY, Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { EMPTY, Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { PostsService } from '@app/shared/posts.service';
 import { IPost } from '@app/shared/interface';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as newsActions from '@app/store/actions/news';
+import * as fromRoot from '@app/store/reducers';
 
 
 @Component({
@@ -15,38 +17,38 @@ import { AlertService } from '@admin/shared/services/alert.service';
   styleUrls: ['./edit-news.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditNewsComponent implements OnInit {
+export class EditNewsComponent implements OnInit, OnDestroy {
 
-  form?: FormGroup;
+  form = new FormGroup({
+    title: new FormControl(null, Validators.required),
+    text: new FormControl(null, Validators.required)
+  });
 
   post?: IPost;
   submitted = false;
 
   disabled$: Observable<boolean> = EMPTY;
 
+  private formSub: Subscription | null = null;
+
   constructor(
     private readonly postsService: PostsService,
     private readonly route: ActivatedRoute,
-    private readonly alertService: AlertService,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private readonly store: Store<fromRoot.State>
   ) { }
 
   ngOnInit(): void {
     this.route.params.pipe(
       // eslint-disable-next-line @typescript-eslint/dot-notation
-      switchMap((params: Params) => this.postsService.getNewById(params['id']))
+      switchMap((params: Params) => this.postsService.getNewsById(params['id']))
     )
     .subscribe((post: IPost) => {
       this.post = post;
-
-      this.form = new FormGroup({
-        title: new FormControl(post.title, Validators.required),
-        text: new FormControl(post.text, Validators.required)
-      });
-
-      this.disabled$ = this.form.statusChanges.pipe(map(x => x === 'INVALID'));
-      this.changeDetectorRef.markForCheck();
+      this.form.setValue({ title: post.title, text: post.text });
     });
+
+    this.disabled$ = this.form.statusChanges.pipe(map(x => x === 'INVALID'));
+    this.formSub = this.form.valueChanges.subscribe(() => this.submitted = false);
   }
 
   submit(): void {
@@ -56,21 +58,17 @@ export class EditNewsComponent implements OnInit {
 
     this.submitted = true;
 
-    this.postsService.updateNew({
-      ...this.post,
-      text: this.form?.value.text,
-      title: this.form?.value.title
-    } as IPost).pipe(take(1))
-      .subscribe({
-        next: () => {
-          this.submitted = false;
-          this.alertService.success('Новость успешно изменена');
-          this.changeDetectorRef.markForCheck();
-        },
-        error: (error) => {
-          this.alertService.danger(`Новость не изменена. Ошибка: ${error.message}`);
-        }
-      });
+    this.store.dispatch(newsActions.update({
+      news: {
+        ...this.post,
+        text: this.form?.value.text,
+        title: this.form?.value.title
+      } as IPost
+    }));
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSub) { this.formSub.unsubscribe(); }
   }
 
 }

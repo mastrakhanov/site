@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { EMPTY, Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { EMPTY, Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { IPost } from '@app/shared/interface';
 import { PostsService } from '@app/shared/posts.service';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as fromRoot from '@app/store/reducers';
+import * as modelsActions from '@app/store/actions/models';
 
 
 @Component({
@@ -15,20 +17,24 @@ import { AlertService } from '@admin/shared/services/alert.service';
   styleUrls: ['./edit-models.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditModelsComponent implements OnInit {
+export class EditModelsComponent implements OnInit, OnDestroy {
 
-  form?: FormGroup;
+  form = new FormGroup({
+    title: new FormControl(null, Validators.required),
+    text: new FormControl(null, Validators.required)
+  });
 
   post?: IPost;
   submitted = false;
 
   disabled$: Observable<boolean> = EMPTY;
 
+  private formSub: Subscription | null = null;
+
   constructor(
     private readonly postsService: PostsService,
     private readonly route: ActivatedRoute,
-    private readonly alertService: AlertService,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private readonly store: Store<fromRoot.State>
   ) { }
 
   ngOnInit(): void {
@@ -38,15 +44,11 @@ export class EditModelsComponent implements OnInit {
     )
     .subscribe((post: IPost) => {
       this.post = post;
-
-      this.form = new FormGroup({
-        title: new FormControl(post.title, Validators.required),
-        text: new FormControl(post.text, Validators.required)
-      });
-
-      this.disabled$ = this.form.statusChanges.pipe(map(x => x === 'INVALID'));
-      this.changeDetectorRef.markForCheck();
+      this.form.setValue({ title: post.title, text: post.text });
     });
+
+    this.disabled$ = this.form.statusChanges.pipe(map(x => x === 'INVALID'));
+    this.formSub = this.form.valueChanges.subscribe(() => this.submitted = false);
   }
 
   submit(): void {
@@ -56,21 +58,17 @@ export class EditModelsComponent implements OnInit {
 
     this.submitted = true;
 
-    this.postsService.updateModel({
-      ...this.post,
-      text: this.form?.value.text,
-      title: this.form?.value.title
-    } as IPost).pipe(take(1))
-      .subscribe({
-        next: () => {
-          this.submitted = false;
-          this.alertService.success('Модель успешно изменена');
-          this.changeDetectorRef.markForCheck();
-        },
-        error: (error) => {
-          this.alertService.danger(`Модель не изменена. Ошибка: ${error.message}`);
-        }
-      });
+    this.store.dispatch(modelsActions.update({
+      model: {
+        ...this.post,
+        text: this.form?.value.text,
+        title: this.form?.value.title
+      } as IPost
+    }));
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSub) { this.formSub.unsubscribe(); }
   }
 
 }

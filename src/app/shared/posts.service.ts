@@ -13,7 +13,7 @@ export class PostsService {
 
  constructor(private readonly http: HttpClient) { }
 
-  createNew(post: IPost): Observable<IPost> {
+  createNews(post: IPost): Observable<IPost> {
     return this.http.post<IFbCreateResponse>(`${environment.fbDbUrl}/news.json`, post)
       .pipe(map((response: IFbCreateResponse) => ({
         ...post,
@@ -53,7 +53,7 @@ export class PostsService {
       );
   }
 
-  getNewById(id: string): Observable<IPost> {
+  getNewsById(id: string): Observable<IPost> {
     return this.http.get<IPost>(`${environment.fbDbUrl}/news/${id}.json`)
       .pipe(map((post: IPost) => ({
         ...post,
@@ -71,13 +71,13 @@ export class PostsService {
       })));
   }
 
-  removeNew = (id: string): Observable<void> =>
+  removeNews = (id: string): Observable<void> =>
     this.http.delete<void>(`${environment.fbDbUrl}/news/${id}.json`);
 
   removeModel = (id: string): Observable<void> =>
     this.http.delete<void>(`${environment.fbDbUrl}/models/${id}.json`);
 
-  updateNew = (post: IPost): Observable<IPost> =>
+  updateNews = (post: IPost): Observable<IPost> =>
     this.http.put<IPost>(`${environment.fbDbUrl}/news/${post.id}.json`, post);
 
   updateModel = (post: IPost): Observable<IPost> =>

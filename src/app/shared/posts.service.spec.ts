@@ -31,8 +31,8 @@ describe('PostsService', () => {
     expect(postsService).toBeTruthy();
   });
 
-  it('should return created new', () => {
-    postsService.createNew(postsStub).subscribe(data => expect(data).toEqual({ ...postsStub, id: responseStub.name }));
+  it('should return created news', () => {
+    postsService.createNews(postsStub).subscribe(data => expect(data).toEqual({ ...postsStub, id: responseStub.name }));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news.json`);
     expect(req.request.method).toEqual('POST');
 
@@ -63,8 +63,8 @@ describe('PostsService', () => {
     req.flush({ 1: postsStub });
   });
 
-  it('should return new by id', () => {
-    postsService.getNewById('1').subscribe(data => expect(data).toEqual({ ...postsStub, id: '1' }));
+  it('should return news by id', () => {
+    postsService.getNewsById('1').subscribe(data => expect(data).toEqual({ ...postsStub, id: '1' }));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news/1.json`);
     expect(req.request.method).toEqual('GET');
 
@@ -79,8 +79,8 @@ describe('PostsService', () => {
     req.flush(postsStub);
   });
 
-  it('should remove new', () => {
-    postsService.removeNew('1').subscribe(data => expect(data).toEqual(null));
+  it('should remove news', () => {
+    postsService.removeNews('1').subscribe(data => expect(data).toEqual(null));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news/1.json`);
     expect(req.request.method).toEqual('DELETE');
 
@@ -95,8 +95,8 @@ describe('PostsService', () => {
     req.flush(null);
   });
 
-  it('should update new', () => {
-    postsService.updateNew({ ...postsStub, id: '1' }).subscribe(data => expect(data).toEqual(postsStub));
+  it('should update news', () => {
+    postsService.updateNews({ ...postsStub, id: '1' }).subscribe(data => expect(data).toEqual(postsStub));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news/1.json`);
     expect(req.request.method).toEqual('PUT');
 

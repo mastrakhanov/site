@@ -14,7 +14,6 @@ import { EditModelsComponent } from './edit-models/edit-models.component';
 import { EditLayoutComponent } from './shared/components/edit-layout/edit-layout.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { AuthGuard } from './shared/services/auth.guard';
-import { AlertService } from './shared/services/alert.service';
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { SearchPipe } from './shared/search.pipe';
 
@@ -46,16 +45,19 @@ import { SearchPipe } from './shared/search.pipe';
           { path: 'create', component: CreateLayoutComponent, children: [
               { path: 'news', component: CreateNewsComponent },
               { path: 'models', component: CreateModelsComponent }
-            ], canActivate: [AuthGuard] },
+            ], canActivate: [AuthGuard]
+          },
           { path: 'edit', component: EditLayoutComponent, canActivate: [AuthGuard] },
           { path: 'edit/news/:id', component: EditNewsComponent },
           { path: 'edit/models/:id', component: EditModelsComponent },
-          { path: 'registration', component: RegistrationPageComponent }
-       ]}
+          { path: 'registration', component: RegistrationPageComponent },
+          { path: '**', redirectTo: '/admin/login' }
+        ]
+      }
     ])
   ],
   exports: [RouterModule],
-  providers: [AuthGuard, AlertService]
+  providers: [AuthGuard]
 })
 
 export class AdminModule { }

@@ -10,7 +10,7 @@ describe('ContactsPageComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [ContactsPageComponent, FooterComponent],
     }).compileComponents();
   });

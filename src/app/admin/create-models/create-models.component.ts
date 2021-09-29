@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { IPost } from '@app/shared/interface';
-import { PostsService } from '@app/shared/posts.service';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as modelsActions from '@app/store/actions/models';
+import * as fromRoot from '@app/store/reducers';
 
 
 @Component({
@@ -23,33 +24,22 @@ export class CreateModelsComponent {
 
   disabled$: Observable<boolean> = this.form.statusChanges.pipe(map(x => x === 'INVALID'));
 
-  constructor(
-    private readonly postsService: PostsService,
-    private readonly alertService: AlertService
-  ) { }
+  constructor(private readonly store: Store<fromRoot.State>) { }
 
   submit(): void {
     if (this.form.invalid) {
       return;
     }
 
-    const post: IPost = {
+    const model: IPost = {
       title: this.form.value.title,
       text: this.form.value.text,
       date: new Date()
     };
 
-    this.postsService.createModel(post)
-      .pipe(take(1))
-      .subscribe({
-        next: () => {
-          this.form.reset();
-          this.alertService.success('Модель успешно создана');
-        },
-        error: (error) => {
-          this.alertService.danger(`Модель не создана. Ошибка: ${error.message}`);
-        }
-      });
+    this.store.dispatch(modelsActions.create({ model }));
+
+    this.form.reset();
   }
 
 }

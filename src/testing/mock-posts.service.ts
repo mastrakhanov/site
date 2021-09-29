@@ -1,26 +1,28 @@
 import { Observable, of } from 'rxjs';
 
 import { IPost } from '@app/shared/interface';
+import { modelStub } from './model-stub';
+import { newsStub } from './news-stub';
 
 
 export class MockPostsService {
-  createNew = (post: IPost): Observable<IPost> => of(post);
+  createNews = (post: IPost): Observable<IPost> => of(post);
 
   createModel = (post: IPost): Observable<IPost> => of(post);
 
-  getAllNews = (): Observable<IPost[]> => of([{ id: '1', title: 'title', text: 'text', date: new Date(0) }]);
+  getAllNews = (): Observable<IPost[]> => of([newsStub]);
 
-  getAllModels = (): Observable<IPost[]> => of([{ id: '1', title: 'title', text: 'text', date: new Date(0) }]);
+  getAllModels = (): Observable<IPost[]> => of([modelStub]);
 
-  getNewById = (id: string): Observable<IPost> => of({ id: '1', title: 'title', text: 'text', date: new Date(0) });
+  getNewsById = (id: string): Observable<IPost> => of(newsStub);
 
-  getModelById = (id: string): Observable<IPost> => of({ id: '1', title: 'title', text: 'text', date: new Date(0) });
+  getModelById = (id: string): Observable<IPost> => of(modelStub);
 
-  removeNew = (id: string): Observable<void> => of(null);
+  removeNews = (id: string): Observable<void> => of(null);
 
   removeModel = (id: string): Observable<void> => of(null);
 
-  updateNew = (post: IPost): Observable<IPost> => of(post);
+  updateNews = (post: IPost): Observable<IPost> => of(post);
 
   updateModel = (post: IPost): Observable<IPost> => of(post);
 }

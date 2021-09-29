@@ -10,7 +10,7 @@ describe('RegistrationPageComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [RegistrationPageComponent],
       imports: [
         ReactiveFormsModule

@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { IPost } from '@app/shared/interface';
-import { PostsService } from '@app/shared/posts.service';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as newsActions from '@app/store/actions/news';
+import * as fromRoot from '@app/store/reducers';
 
 
 @Component({
@@ -23,33 +24,22 @@ export class CreateNewsComponent {
 
   disabled$: Observable<boolean> = this.form.statusChanges.pipe(map(x => x === 'INVALID'));
 
-  constructor(
-    private readonly postsService: PostsService,
-    private readonly alertService: AlertService
-  ) { }
+  constructor(private readonly store: Store<fromRoot.State>) { }
 
   submit(): void {
     if (this.form.invalid) {
       return;
     }
 
-    const post: IPost = {
+    const news: IPost = {
       title: this.form.value.title,
       text: this.form.value.text,
       date: new Date()
     };
 
-    this.postsService.createNew(post)
-      .pipe(take(1))
-      .subscribe({
-        next: () => {
-          this.form.reset();
-          this.alertService.success('Новость успешно создана');
-        },
-        error: (error) => {
-          this.alertService.danger(`Новость не создана. Ошибка: ${error.message}`);
-        }
-      });
+    this.store.dispatch(newsActions.create({ news }));
+
+    this.form.reset();
   }
 
 }

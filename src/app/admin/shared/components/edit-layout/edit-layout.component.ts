@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { EMPTY, Observable } from 'rxjs';
 
-import { PostsService } from '@app/shared/posts.service';
 import { IPost } from '@app/shared/interface';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as fromRoot from '@app/store/reducers';
+import * as newsActions from '@app/store/actions/news';
+import * as modelsActions from '@app/store/actions/models';
 
 
 @Component({
@@ -20,52 +21,30 @@ export class EditLayoutComponent implements OnInit {
 
   postsNews$: Observable<IPost[]> = EMPTY;
   postsModels$: Observable<IPost[]> = EMPTY;
+  loadingNews$: Observable<boolean> = EMPTY;
+  loadingModels$: Observable<boolean> = EMPTY;
 
-  checkModels$ = new BehaviorSubject<boolean>(false);
-  checkNews$ = new BehaviorSubject<boolean>(false);
-
-  constructor(
-    private readonly postService: PostsService,
-    private readonly alertService: AlertService
-  ) { }
+  constructor(private readonly store: Store<fromRoot.State>) { }
 
   ngOnInit(): void {
-    this.postsModels$ = this.checkModels$
-      .pipe(switchMap(() => this.postService.getAllModels()));
+    this.store.dispatch(newsActions.load());
+    this.store.dispatch(modelsActions.load());
 
-    this.postsNews$ = this.checkNews$
-      .pipe(switchMap(() => this.postService.getAllNews()));
+    this.postsModels$ = this.store.select(fromRoot.selectModelsAll);
+    this.postsNews$ = this.store.select(fromRoot.selectNewsAll);
+    this.loadingNews$ = this.store.select(fromRoot.selectLoadingNews);
+    this.loadingModels$ = this.store.select(fromRoot.selectLoadingModels);
   }
 
-  removeNew(id: string | undefined): void {
+  removeNews(id: string | undefined): void {
     if (id) {
-      this.postService.removeNew(id)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.checkNews$.next(true);
-            this.alertService.success('Новость успешно удалена');
-          },
-          error: (error) => {
-            this.alertService.danger(`Новость не удалена. Ошибка: ${error.message}`);
-          }
-        });
+      this.store.dispatch(newsActions.remove({ id }));
     }
   }
 
   removeModel(id: string | undefined): void {
     if (id) {
-      this.postService.removeModel(id)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.checkModels$.next(true);
-            this.alertService.success('Модель успешно удалена');
-          },
-          error: (error) => {
-            this.alertService.danger(`Модель не удалена. Ошибка: ${error.message}`);
-          }
-        });
+      this.store.dispatch(modelsActions.remove({ id }));
     }
   }
 

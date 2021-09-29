@@ -3,12 +3,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { QuillModule } from 'ngx-quill';
 
+import { mockStoreInitialState } from 'src/testing/mock-store-initial-state';
 import { MockPostsService } from 'src/testing/mock-posts.service';
 import { PostsService } from '@app/shared/posts.service';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as modelsActions from '@app/store/actions/models';
 
 import { CreateModelsComponent } from './create-models.component';
 
@@ -16,11 +19,11 @@ import { CreateModelsComponent } from './create-models.component';
 describe('CreateModelsComponent', () => {
   let component: CreateModelsComponent;
   let fixture: ComponentFixture<CreateModelsComponent>;
-  let alertService: AlertService;
+  let store: Store;
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [CreateModelsComponent],
       imports: [
         HttpClientTestingModule,
@@ -29,9 +32,9 @@ describe('CreateModelsComponent', () => {
         QuillModule
       ],
       providers: [
+        provideMockStore({ initialState: mockStoreInitialState }),
         { provide: PostsService, useClass: MockPostsService },
-        { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } },
-        AlertService
+        { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } }
       ]
     }).compileComponents();
   });
@@ -39,7 +42,7 @@ describe('CreateModelsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateModelsComponent);
     component = fixture.componentInstance;
-    alertService = TestBed.inject(AlertService);
+    store = TestBed.inject(Store);
     fixture.detectChanges();
   });
 
@@ -74,11 +77,13 @@ describe('CreateModelsComponent', () => {
     expect(element.textContent).toContain('Добавить модель');
   });
 
-  it('should call alertService success() and reset form', () => {
-    spyOn(alertService, 'success');
+  it('should call store dispatch() and reset form', () => {
+    spyOn(store, 'dispatch');
     component.form.setValue({ title: 'title', text: 'text' });
+    const model = { title: 'title', text: 'text', date: new Date() };
     component.submit();
+
     expect(component.form.value).toEqual({ title: null, text: null });
-    expect(alertService.success).toHaveBeenCalledWith('Модель успешно создана');
+    expect(store.dispatch).toHaveBeenCalledWith(modelsActions.create({ model }));
   });
 });

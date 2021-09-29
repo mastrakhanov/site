@@ -9,7 +9,7 @@ export interface IAlert {
   text: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 
 export class AlertService {
 

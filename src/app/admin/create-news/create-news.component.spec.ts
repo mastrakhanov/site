@@ -3,12 +3,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { QuillModule } from 'ngx-quill';
 
+import { mockStoreInitialState } from 'src/testing/mock-store-initial-state';
 import { MockPostsService } from 'src/testing/mock-posts.service';
 import { PostsService } from '@app/shared/posts.service';
-import { AlertService } from '@admin/shared/services/alert.service';
+import * as newsActions from '@app/store/actions/news';
 
 import { CreateNewsComponent } from './create-news.component';
 
@@ -16,11 +19,11 @@ import { CreateNewsComponent } from './create-news.component';
 describe('CreateNewsComponent', () => {
   let component: CreateNewsComponent;
   let fixture: ComponentFixture<CreateNewsComponent>;
-  let alertService: AlertService;
+  let store: Store;
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [CreateNewsComponent],
       imports: [
         HttpClientTestingModule,
@@ -29,9 +32,9 @@ describe('CreateNewsComponent', () => {
         QuillModule
       ],
       providers: [
+        provideMockStore({ initialState: mockStoreInitialState }),
         { provide: PostsService, useClass: MockPostsService },
-        { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } },
-        AlertService
+        { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } }
       ]
     }).compileComponents();
   });
@@ -39,7 +42,7 @@ describe('CreateNewsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateNewsComponent);
     component = fixture.componentInstance;
-    alertService = TestBed.inject(AlertService);
+    store = TestBed.inject(Store);
     fixture.detectChanges();
   });
 
@@ -74,11 +77,13 @@ describe('CreateNewsComponent', () => {
     expect(element.textContent).toContain('Добавить новость');
   });
 
-  it('should call alertService success() and reset form', () => {
-    spyOn(alertService, 'success');
+  it('should call store dispatch() and reset form', () => {
+    spyOn(store, 'dispatch');
     component.form.setValue({ title: 'title', text: 'text' });
+    const news = { title: 'title', text: 'text', date: new Date() };
     component.submit();
+
     expect(component.form.value).toEqual({ title: null, text: null });
-    expect(alertService.success).toHaveBeenCalledWith('Новость успешно создана');
+    expect(store.dispatch).toHaveBeenCalledWith(newsActions.create({ news }));
   });
 });

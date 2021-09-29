@@ -10,7 +10,7 @@ describe('HistoryPageComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [HistoryPageComponent, FooterComponent],
     }).compileComponents();
   });

@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
 import { QuillModule } from 'ngx-quill';
-import { of } from 'rxjs';
 
+import { commentStoreStub, mockStoreInitialState, newsStoreStub } from 'src/testing/mock-store-initial-state';
 import { MockCommentsService } from 'src/testing/mock-comments.service';
 import { MockPostsService } from 'src/testing/mock-posts.service';
 import { AuthService } from '@admin/shared/services/auth.service';
-import { IComment, IPost } from '@app/shared/interface';
 import { CommentsService } from '@app/shared/comments.service';
 import { PostsService } from '@app/shared/posts.service';
-
 import { FooterComponent } from '@app/footer/footer.component';
+import * as commentsActions from '@app/store/actions/comments';
+import * as newsActions from '@app/store/actions/news';
+
 import { NewsPageComponent } from './news-page.component';
 
 
@@ -21,13 +24,11 @@ describe('NewsPageComponent', () => {
   let commentsService: CommentsService;
   let postsService: PostsService;
   let authService: AuthService;
+  let store: Store;
   let element: HTMLElement;
 
-  const postStub: IPost = { id: '1', title: 'title', text: 'text', date: new Date(0) };
-  const commentStub: IComment = { id: '1', text: 'text', date: new Date(0) };
-
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [NewsPageComponent, FooterComponent],
       imports: [
         HttpClientTestingModule,
@@ -35,6 +36,7 @@ describe('NewsPageComponent', () => {
         QuillModule
       ],
       providers: [
+        provideMockStore({ initialState: mockStoreInitialState }),
         { provide: CommentsService, useClass: MockCommentsService },
         { provide: PostsService, useClass: MockPostsService },
         AuthService
@@ -48,6 +50,7 @@ describe('NewsPageComponent', () => {
     commentsService = TestBed.inject(CommentsService);
     postsService = TestBed.inject(PostsService);
     authService = TestBed.inject(AuthService);
+    store = TestBed.inject(Store);
     fixture.detectChanges();
   });
 
@@ -63,12 +66,12 @@ describe('NewsPageComponent', () => {
 
   it('should contain "title"', () => {
     element = fixture.nativeElement.querySelector('.news-content h2');
-    expect(element.textContent).toContain('title');
+    expect(element.textContent).toContain(newsStoreStub.title);
   });
 
   it('should contain "text"', () => {
     element = fixture.nativeElement.querySelector('.comments-list__item p');
-    expect(element.textContent).toContain('text');
+    expect(element.textContent).toContain(commentStoreStub.text);
   });
 
   it('should contain "Комментарии"', () => {
@@ -88,12 +91,24 @@ describe('NewsPageComponent', () => {
 
   it('should download postsN', () => {
     component.ngOnInit();
-    component.postsN$.subscribe(post => expect(post).toEqual([postStub]));
+    component.postsN$.subscribe(post => expect(post).toEqual([newsStoreStub]));
   });
 
   it('should download commentList', () => {
     component.ngOnInit();
-    component.commentsList$.subscribe(post => expect(post).toEqual([commentStub]));
+    component.commentsList$.subscribe(post => expect(post).toEqual([commentStoreStub]));
+  });
+
+  it('should loading to be false', () => {
+    component.ngOnInit();
+    component.loading$.subscribe(post => expect(post).toBeFalse());
+  });
+
+  it('should call store dispatch()', () => {
+    spyOn(store, 'dispatch')
+    component.ngOnInit();
+    expect(store.dispatch).toHaveBeenCalledWith(newsActions.load());
+    expect(store.dispatch).toHaveBeenCalledWith(commentsActions.load());
   });
 
   it('should isAuthenticated to be true', () => {
@@ -102,18 +117,20 @@ describe('NewsPageComponent', () => {
     expect(component.isAuthenticated).toBeTruthy();
   });
 
-  it('should submitComment() create comment and reset comment form', () => {
-    spyOn(commentsService, 'createComment').and.returnValue(of({} as IComment));
+  it('should submitComment() call store dispatch() and reset comment form', () => {
+    spyOn(store, 'dispatch');
     component.formComment.setValue({ text: 'text' });
     component.submitComment();
+    const comment = { text: 'text', date: new Date() };
+
     expect(component.formComment.value).toEqual({ text: null });
-    expect(commentsService.createComment).toHaveBeenCalled();
+    expect(store.dispatch).toHaveBeenCalledWith(commentsActions.create({ comment }));
   });
 
-  it('should deleteComment() remove comment', () => {
-    spyOn(commentsService, 'removeComment').and.returnValue(of());
+  it('deleteComment() should call store dispatch()', () => {
+    spyOn(store, 'dispatch');
     spyOn(authService, 'isAuthenticated').and.returnValue(true);
     component.deleteComment('1');
-    expect(commentsService.removeComment).toHaveBeenCalledWith('1');
+    expect(store.dispatch).toHaveBeenCalledWith(commentsActions.remove({ id: '1' }));
   });
 });

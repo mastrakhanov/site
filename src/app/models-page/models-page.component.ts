@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { EMPTY, Observable } from 'rxjs';
 
 import { IPost } from '@app/shared/interface';
-import { PostsService } from '@app/shared/posts.service';
+import * as fromRoot from '@app/store/reducers';
+import * as modelsActions from '@app/store/actions/models';
 
 
 @Component({
@@ -14,11 +16,15 @@ import { PostsService } from '@app/shared/posts.service';
 export class ModelsPageComponent implements OnInit {
 
   postsM$: Observable<IPost[]> = EMPTY;
+  loading$: Observable<boolean> = EMPTY;
 
-  constructor(private readonly postsService: PostsService) { }
+  constructor(private readonly store: Store<fromRoot.State>) { }
 
   ngOnInit(): void {
-    this.postsM$ = this.postsService.getAllModels();
+    this.store.dispatch(modelsActions.load());
+
+    this.postsM$ = this.store.select(fromRoot.selectModelsAll);
+    this.loading$ = this.store.select(fromRoot.selectLoadingModels);
   }
 
 }

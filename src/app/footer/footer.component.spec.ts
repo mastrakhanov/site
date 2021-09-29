@@ -9,7 +9,7 @@ describe('FooterComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [FooterComponent],
     }).compileComponents();
   });

@@ -1,12 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
 import { QuillModule } from 'ngx-quill';
 
+import { mockStoreInitialState, modelStoreStub } from 'src/testing/mock-store-initial-state';
 import { MockPostsService } from 'src/testing/mock-posts.service';
-import { IPost } from '@app/shared/interface';
-import { PostsService } from '@app/shared/posts.service';
 
+import { PostsService } from '@app/shared/posts.service';
 import { FooterComponent } from '@app/footer/footer.component';
+import * as modelsActions from '@app/store/actions/models';
+
 import { ModelsPageComponent } from './models-page.component';
 
 
@@ -14,18 +18,18 @@ describe('ModelsPageComponent', () => {
   let component: ModelsPageComponent;
   let fixture: ComponentFixture<ModelsPageComponent>;
   let postsService: PostsService;
+  let store: Store;
   let element: HTMLElement;
 
-  const postStub: IPost = { id: '1', title: 'title', text: 'text', date: new Date(0) };
-
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [ModelsPageComponent, FooterComponent],
       imports: [
         ReactiveFormsModule,
         QuillModule
       ],
       providers: [
+        provideMockStore({ initialState: mockStoreInitialState }),
         { provide: PostsService, useClass: MockPostsService },
       ]
     }).compileComponents();
@@ -35,6 +39,7 @@ describe('ModelsPageComponent', () => {
     fixture = TestBed.createComponent(ModelsPageComponent);
     component = fixture.componentInstance;
     postsService = TestBed.inject(PostsService);
+    store = TestBed.inject(Store);
     fixture.detectChanges();
   });
 
@@ -50,11 +55,22 @@ describe('ModelsPageComponent', () => {
 
   it('should contain "title"', () => {
     element = fixture.nativeElement.querySelector('.models h2');
-    expect(element.textContent).toContain('title');
+    expect(element.textContent).toContain(modelStoreStub.title);
   });
 
   it('should download postsM', () => {
     component.ngOnInit();
-    component.postsM$.subscribe(post => expect(post).toEqual([postStub]));
+    component.postsM$.subscribe(post => expect(post).toEqual([modelStoreStub]));
+  });
+
+  it('should loading to be false', () => {
+    component.ngOnInit();
+    component.loading$.subscribe(post => expect(post).toBeFalse());
+  });
+
+  it('should call store dispatch()', () => {
+    spyOn(store, 'dispatch')
+    component.ngOnInit();
+    expect(store.dispatch).toHaveBeenCalledWith(modelsActions.load());
   });
 });

@@ -10,7 +10,7 @@ describe('MainLayoutPageComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [MainLayoutPageComponent],
       imports: [RouterTestingModule]
     }).compileComponents();

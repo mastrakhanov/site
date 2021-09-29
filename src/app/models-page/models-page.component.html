@@ -1,21 +1,21 @@
-<div *ngIf="postsM$ | async as posts; else loading"
-     id="models__wrapper"
-  >
-  <div *ngFor="let postM of posts"
-       class="models"
-  >
-    <br>
-    <div>
-      <h2>{{ postM.title }}</h2>
+<div id="models-wrapper">
+  <ng-container *ngIf="!(loading$ | async) else loading">
+    <div *ngFor="let postM of postsM$ | async"
+         class="models"
+    >
+      <br>
       <div>
+        <h2>{{ postM.title }}</h2>
         <div>
-          <quill-view-html [content]="postM.text"></quill-view-html>
+          <div>
+            <quill-view-html [content]="postM.text"></quill-view-html>
+          </div>
         </div>
       </div>
+      <hr>
     </div>
-    <hr>
-  </div>
-  <app-footer></app-footer>
+    <app-footer></app-footer>
+  </ng-container>
 </div>
 
 <ng-template #loading>
