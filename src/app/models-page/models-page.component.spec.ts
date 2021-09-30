@@ -69,7 +69,7 @@ describe('ModelsPageComponent', () => {
   });
 
   it('should call store dispatch()', () => {
-    spyOn(store, 'dispatch')
+    spyOn(store, 'dispatch');
     component.ngOnInit();
     expect(store.dispatch).toHaveBeenCalledWith(modelsActions.load());
   });

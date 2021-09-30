@@ -105,7 +105,7 @@ describe('NewsPageComponent', () => {
   });
 
   it('should call store dispatch()', () => {
-    spyOn(store, 'dispatch')
+    spyOn(store, 'dispatch');
     component.ngOnInit();
     expect(store.dispatch).toHaveBeenCalledWith(newsActions.load());
     expect(store.dispatch).toHaveBeenCalledWith(commentsActions.load());

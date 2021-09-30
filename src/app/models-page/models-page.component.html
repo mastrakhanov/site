@@ -1,5 +1,5 @@
 <div id="models-wrapper">
-  <ng-container *ngIf="!(loading$ | async) else loading">
+  <ng-container *ngIf="(loading$ | async) === false else loading">
     <div *ngFor="let postM of postsM$ | async"
          class="models"
     >

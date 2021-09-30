@@ -1,5 +1,5 @@
 <div id="edit-layout">
-  <ng-container *ngIf="!(loadingNews$ | async); else loading">
+  <ng-container *ngIf="(loadingNews$ | async) === false; else loading">
     <div class="edit-layout__item" *ngIf="postsNews$ | async as postsNews">
       <div class="edit-layout__search">
         <input class="edit-layout__input" type="text" placeholder="Поиск" [(ngModel)]="searchStr">
@@ -41,7 +41,7 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="!(loadingModels$ | async); else loading">
+  <ng-container *ngIf="(loadingModels$ | async) === false; else loading">
     <div class="edit-layout__item" *ngIf="postsModels$ | async as postsModels">
       <br>
       <h2>Список моделей</h2>

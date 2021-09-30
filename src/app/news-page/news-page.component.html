@@ -1,5 +1,5 @@
 <div id="news-wrapper">
-  <ng-container *ngIf="!(loading$ | async) else loading">
+  <ng-container *ngIf="(loading$ | async) === false else loading">
     <div class="news-content">
       <div *ngFor="let postN of postsN$ | async">
         <br>
