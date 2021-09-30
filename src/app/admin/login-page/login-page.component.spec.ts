@@ -22,7 +22,7 @@ describe('LoginPageComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [LoginPageComponent],
       imports: [
         HttpClientTestingModule,
@@ -91,7 +91,7 @@ describe('LoginPageComponent', () => {
     spyOn(authService, 'login').and.returnValue(of({}));
     component.form.setValue({ email: 'email@yandex.ru', password: 'password' });
     component.submit();
-    fixture.detectChanges();
+
     expect(component.form.value).toEqual({ email: null, password: null });
     expect(router.navigate).toHaveBeenCalledTimes(1);
   });

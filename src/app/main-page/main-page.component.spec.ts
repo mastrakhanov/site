@@ -11,7 +11,7 @@ describe('MainPageComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [MainPageComponent, FooterComponent],
       imports: [
         SwiperModule

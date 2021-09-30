@@ -121,10 +121,9 @@ describe('NewsPageComponent', () => {
     spyOn(store, 'dispatch');
     component.formComment.setValue({ text: 'text' });
     component.submitComment();
-    const comment = { text: 'text', date: new Date() };
 
     expect(component.formComment.value).toEqual({ text: null });
-    expect(store.dispatch).toHaveBeenCalledWith(commentsActions.create({ comment }));
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
   });
 
   it('deleteComment() should call store dispatch()', () => {

@@ -3,7 +3,10 @@ import { HttpClient} from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { environment } from 'src/environments/environment';
-import { IFbCreateResponse, IPost } from '@app/shared/interface';
+import { newsStub } from 'src/testing/news-stub';
+import { modelStub } from 'src/testing/model-stub';
+import { responseStub } from 'src/testing/response-stub';
+
 import { PostsService } from '@app/shared/posts.service';
 
 
@@ -11,9 +14,6 @@ describe('PostsService', () => {
   let postsService: PostsService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-
-  const postsStub: IPost = { title: 'title', text: 'text', date: new Date(0) };
-  const responseStub: IFbCreateResponse = { name: '1' };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -32,7 +32,7 @@ describe('PostsService', () => {
   });
 
   it('should return created news', () => {
-    postsService.createNews(postsStub).subscribe(data => expect(data).toEqual({ ...postsStub, id: responseStub.name }));
+    postsService.createNews(newsStub).subscribe(data => expect(data).toEqual({ ...newsStub, id: responseStub.name }));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news.json`);
     expect(req.request.method).toEqual('POST');
 
@@ -40,7 +40,7 @@ describe('PostsService', () => {
   });
 
   it('should return created model', () => {
-    postsService.createModel(postsStub).subscribe(data => expect(data).toEqual({ ...postsStub, id: responseStub.name }));
+    postsService.createModel(modelStub).subscribe(data => expect(data).toEqual({ ...modelStub, id: responseStub.name }));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/models.json`);
     expect(req.request.method).toEqual('POST');
 
@@ -48,35 +48,35 @@ describe('PostsService', () => {
   });
 
   it('should return all news', () => {
-    postsService.getAllNews().subscribe(data => expect(data).toEqual([{ ...postsStub, id: '1' }]));
+    postsService.getAllNews().subscribe(data => expect(data).toEqual([newsStub]));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news.json`);
     expect(req.request.method).toEqual('GET');
 
-    req.flush({ 1: postsStub });
+    req.flush({ 1: newsStub });
   });
 
   it('should return all models', () => {
-    postsService.getAllModels().subscribe(data => expect(data).toEqual([{ ...postsStub, id: '1' }]));
+    postsService.getAllModels().subscribe(data => expect(data).toEqual([modelStub]));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/models.json`);
     expect(req.request.method).toEqual('GET');
 
-    req.flush({ 1: postsStub });
+    req.flush({ 1: modelStub });
   });
 
   it('should return news by id', () => {
-    postsService.getNewsById('1').subscribe(data => expect(data).toEqual({ ...postsStub, id: '1' }));
+    postsService.getNewsById('1').subscribe(data => expect(data).toEqual(newsStub));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news/1.json`);
     expect(req.request.method).toEqual('GET');
 
-    req.flush(postsStub);
+    req.flush(newsStub);
   });
 
   it('should return model by id', () => {
-    postsService.getModelById('1').subscribe(data => expect(data).toEqual({ ...postsStub, id: '1' }));
+    postsService.getModelById('1').subscribe(data => expect(data).toEqual(modelStub));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/models/1.json`);
     expect(req.request.method).toEqual('GET');
 
-    req.flush(postsStub);
+    req.flush(modelStub);
   });
 
   it('should remove news', () => {
@@ -96,18 +96,18 @@ describe('PostsService', () => {
   });
 
   it('should update news', () => {
-    postsService.updateNews({ ...postsStub, id: '1' }).subscribe(data => expect(data).toEqual(postsStub));
+    postsService.updateNews(newsStub).subscribe(data => expect(data).toEqual(newsStub));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/news/1.json`);
     expect(req.request.method).toEqual('PUT');
 
-    req.flush(postsStub);
+    req.flush(newsStub);
   });
 
   it('should update model', () => {
-    postsService.updateModel({ ...postsStub, id: '1' }).subscribe(data => expect(data).toEqual(postsStub));
+    postsService.updateModel(modelStub).subscribe(data => expect(data).toEqual(modelStub));
     const req = httpTestingController.expectOne(`${environment.fbDbUrl}/models/1.json`);
     expect(req.request.method).toEqual('PUT');
 
-    req.flush(postsStub);
+    req.flush(modelStub);
   });
 });

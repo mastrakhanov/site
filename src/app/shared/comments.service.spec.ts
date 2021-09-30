@@ -3,7 +3,9 @@ import { HttpClient} from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { environment } from 'src/environments/environment';
-import { IComment, IFbCreateResponse } from '@app/shared/interface';
+import { commentStub } from 'src/testing/comments-stub';
+import { responseStub } from 'src/testing/response-stub';
+
 import { CommentsService } from '@app/shared/comments.service';
 
 
@@ -11,9 +13,6 @@ describe('CommentsService', () => {
   let commentsService: CommentsService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-
-  const commentStub: IComment = { text: 'text', date: new Date(0) };
-  const responseStub: IFbCreateResponse = { name: '1' };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

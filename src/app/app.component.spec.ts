@@ -10,7 +10,7 @@ describe('AppComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [AppComponent],
       imports: [
         RouterTestingModule

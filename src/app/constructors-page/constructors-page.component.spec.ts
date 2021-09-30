@@ -10,7 +10,7 @@ describe('ConstructorsPageComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [ConstructorsPageComponent, FooterComponent],
     }).compileComponents();
   });
