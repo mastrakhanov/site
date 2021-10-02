@@ -5,7 +5,7 @@ import { SearchPipe } from './search.pipe';
 describe('SearchPipe', () => {
   let searchPipe: SearchPipe;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     searchPipe = new SearchPipe();
   });
 
