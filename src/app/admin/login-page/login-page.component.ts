@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { IUser } from '@app/shared/interface';
@@ -32,12 +32,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params: Params) => {
-      // eslint-disable-next-line @typescript-eslint/dot-notation
-      if (params['loginAgain']) {
+    this.route.queryParams.subscribe(({ loginAgain, authFailed }) => {
+      if (loginAgain) {
         this.message = 'Пожалуйста, введите данные';
-        // eslint-disable-next-line @typescript-eslint/dot-notation
-      } else if (params ['authFailed']) {
+      } else if (authFailed) {
         this.message = 'Сессия истекла. Введите данные заново.';
       }
     });

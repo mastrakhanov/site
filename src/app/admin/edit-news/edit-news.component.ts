@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EMPTY, Observable, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -39,8 +39,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.pipe(
-      // eslint-disable-next-line @typescript-eslint/dot-notation
-      switchMap((params: Params) => this.postsService.getNewsById(params['id']))
+      switchMap(({ id }) => this.postsService.getNewsById(id))
     )
     .subscribe((post: IPost) => {
       this.post = post;
