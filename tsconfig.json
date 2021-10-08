@@ -1,4 +1,16 @@
 {
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@admin/*": [
+        "src/app/admin/*"
+      ]
+    }
+  },
   "references": [
     {
       "path": "./tsconfig.app.json"
