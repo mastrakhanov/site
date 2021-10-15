@@ -53,7 +53,7 @@ describe('AdminLayoutComponent', () => {
   });
 
   it('should contain "На главную страницу"', () => {
-    element = fixture.nativeElement.querySelectorAll('a')[0];
+    element = fixture.nativeElement.querySelector('a');
     expect(element.textContent).toContain('На главную страницу');
   });
 
@@ -70,6 +70,20 @@ describe('AdminLayoutComponent', () => {
   it('should contain "Выйти"', () => {
     element = fixture.nativeElement.querySelectorAll('a')[3];
     expect(element.textContent).toContain('Выйти');
+  });
+
+  it('should link to /', (done) => {
+    element = fixture.nativeElement.querySelector('a');
+
+    fixture.ngZone.run(() => {
+      element.click();
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(router.url).toBe('/');
+      });
+    });
+
+    done();
   });
 
   it('should call authService logout() and router navigate()', () => {

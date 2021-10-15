@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 import { MainLayoutPageComponent } from './main-layout-page.component';
 
@@ -7,6 +8,7 @@ import { MainLayoutPageComponent } from './main-layout-page.component';
 describe('MainLayoutPageComponent', () => {
   let component: MainLayoutPageComponent;
   let fixture: ComponentFixture<MainLayoutPageComponent>;
+  let router: Router;
   let element: HTMLElement;
 
   beforeEach(async () => {
@@ -19,6 +21,7 @@ describe('MainLayoutPageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MainLayoutPageComponent);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
@@ -44,5 +47,19 @@ describe('MainLayoutPageComponent', () => {
     expect(element.textContent).toContain('Модельный ряд');
     expect(element.textContent).toContain('Новости');
     expect(element.textContent).toContain('Контакты');
+  });
+
+  it('should link to /', (done) => {
+    element = fixture.nativeElement.querySelector('li');
+
+    fixture.ngZone.run(() => {
+      element.click();
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(router.url).toBe('/');
+      });
+    });
+
+    done();
   });
 });
