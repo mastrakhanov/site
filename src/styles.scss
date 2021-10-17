@@ -5,6 +5,7 @@
 @import "../node_modules/swiper/swiper";
 @import "../node_modules/swiper/modules/pagination/pagination";
 @import "../node_modules/swiper/modules/autoplay/autoplay";
+@import "~font-awesome/scss/font-awesome.scss";
 
 
 * {
@@ -138,7 +139,6 @@ body {
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
   }
-
 }
 
 .spinner-models {
