@@ -40,7 +40,13 @@
         <br>
         <div class="comments-list__item">
           <p>{{ comment.text }}</p>
-          <span>{{ comment.date | date: 'dd.MM.yyyy' }} <i *ngIf="isAuthenticated" (click)="deleteComment(comment.id)" class="fa fa-trash" aria-hidden="true"></i></span>
+          <span>
+            {{ comment.date | date: 'dd.MM.yyyy' }}
+            <i *ngIf="isAuthenticated"
+               class="fa fa-trash"
+               (click)="deleteComment(comment.id)"
+            ></i>
+          </span>
         </div>
       </div>
     </div>
