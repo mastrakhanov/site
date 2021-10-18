@@ -89,6 +89,10 @@ describe('NewsPageComponent', () => {
     expect(element.textContent).toContain('Добавить');
   });
 
+  it('formComment should be truthy', () => {
+    expect(component.formComment).toBeTruthy();
+  });
+
   it('should download postsN', () => {
     component.ngOnInit();
     component.postsN$.subscribe(post => expect(post).toEqual([newsStoreStub]));
@@ -119,10 +123,10 @@ describe('NewsPageComponent', () => {
 
   it('should submitComment() call store dispatch() and reset comment form', () => {
     spyOn(store, 'dispatch');
-    component.formComment.setValue({ text: 'text' });
+    component.formComment.setValue('text');
     component.submitComment();
 
-    expect(component.formComment.value).toEqual({ text: null });
+    expect(component.formComment.value).toEqual(null);
     expect(store.dispatch).toHaveBeenCalledTimes(1);
   });
 

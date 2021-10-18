@@ -56,4 +56,16 @@ describe('RegistrationPageComponent', () => {
     element.click();
     expect(component.isVisible).toBeTrue();
   });
+
+  it('form should contain name, surname, email, personal, pass, confPass, city, country, about controls', () => {
+    expect(component.form.contains('name')).toBeTrue();
+    expect(component.form.contains('surname')).toBeTrue();
+    expect(component.form.contains('email')).toBeTrue();
+    expect(component.form.contains('personal')).toBeTrue();
+    expect(component.form.contains('pass')).toBeTrue();
+    expect(component.form.contains('confPass')).toBeTrue();
+    expect(component.form.contains('city')).toBeTrue();
+    expect(component.form.contains('country')).toBeTrue();
+    expect(component.form.contains('about')).toBeTrue();
+  });
 });

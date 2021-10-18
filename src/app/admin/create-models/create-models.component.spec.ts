@@ -76,6 +76,11 @@ describe('CreateModelsComponent', () => {
     expect(element.textContent).toContain('Добавить модель');
   });
 
+  it('form should contain title and text controls', () => {
+    expect(component.form.contains('title')).toBeTrue();
+    expect(component.form.contains('text')).toBeTrue();
+  });
+
   it('should call store dispatch() and reset form', () => {
     spyOn(store, 'dispatch');
     component.form.setValue({ title: 'title', text: 'text' });

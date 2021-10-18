@@ -79,6 +79,11 @@ describe('EditModelsComponent', () => {
     expect(element.textContent).toContain('Обновить');
   });
 
+  it('form should contain title and text controls', () => {
+    expect(component.form.contains('title')).toBeTrue();
+    expect(component.form.contains('text')).toBeTrue();
+  });
+
   it('should post value to be modelStub', () => {
     component.ngOnInit();
     expect(component.post).toEqual(modelStub);

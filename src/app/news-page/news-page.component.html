@@ -18,12 +18,13 @@
 
     <div class="comments-content">
       <h2>Комментарии</h2>
-      <form [formGroup]="formComment" (ngSubmit)="submitComment()">
-        <textarea cols="30" rows="5" formControlName="text" placeholder="Введите комментарий..."></textarea>
+      <form>
+        <textarea cols="30" rows="5" [formControl]="formComment" placeholder="Введите комментарий..."></textarea>
         <div>
           <button
             class="btn-login"
-            type="submit"
+            type="button"
+            (click)="submitComment()"
             [disabled]="formComment.invalid"
           >
             Добавить комментарий

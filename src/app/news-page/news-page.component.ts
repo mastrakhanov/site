@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { EMPTY, Observable } from 'rxjs';
 
@@ -19,9 +19,7 @@ import * as fromRoot from '@app/store/reducers';
 
 export class NewsPageComponent implements OnInit {
 
-  formComment: FormGroup = new FormGroup({
-    text: new FormControl(null, Validators.required)
-  });
+  formComment = new FormControl(null, Validators.required);
 
   isAuthenticated?: boolean;
 
@@ -51,7 +49,7 @@ export class NewsPageComponent implements OnInit {
     }
 
     const comment: IComment = {
-      text: this.formComment.value.text,
+      text: this.formComment.value,
       date: new Date()
     };
 

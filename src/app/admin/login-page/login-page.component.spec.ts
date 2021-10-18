@@ -86,6 +86,11 @@ describe('LoginPageComponent', () => {
     expect(element.textContent).toContain('Регистрация');
   });
 
+  it('form should contain email and password controls', () => {
+    expect(component.form.contains('email')).toBeTrue();
+    expect(component.form.contains('password')).toBeTrue();
+  });
+
   it('should submit() call router navigate and reset form', () => {
     spyOn(router, 'navigate');
     spyOn(authService, 'login').and.returnValue(of({}));
